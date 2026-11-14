@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Binary Search Mission | LogicVerse</title>
+
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/mission.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <a href="home.html" class="logo">
+            Logic<span>Verse.</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="catalogue.html" class="active">Missions</a>
+            <a href="home.html#about">About</a>
+        </div>
+
+        <a href="catalogue.html" class="nav-button">
+            Back to Missions
+        </a>
+
+    </nav>
+
+
+    <!-- MISSION HERO -->
+    <section class="mission-hero">
+
+        <span class="tag">MISSION 01 • BEGINNER</span>
+
+        <h1>The Hidden Treasure Hunt</h1>
+
+        <p>
+            Become a treasure hunter and discover the hidden
+            treasure using the power of Binary Search.
+        </p>
+
+        <div class="mission-info">
+            <span>🔎 Searching Algorithm</span>
+            <span>⏱️ 10–15 Minutes</span>
+            <span>⭐ Beginner Level</span>
+        </div>
+
+    </section>
+
+
+    <!-- STORY SECTION -->
+    <section class="story-section">
+
+        <div class="story-content">
+
+            <span class="tag">YOUR STORY BEGINS</span>
+
+            <h2>The Mystery of the Treasure Island</h2>
+
+            <p>
+                You have arrived at a mysterious island.
+                Somewhere on this island, a valuable treasure
+                is hidden inside one of several numbered boxes.
+            </p>
+
+            <p>
+                You cannot open every box one by one.
+                You need to use an intelligent searching strategy
+                to find the treasure quickly.
+            </p>
+
+            <p>
+                Your mission is to use Binary Search to discover
+                the correct box.
+            </p>
+
+        </div>
+
+        <div class="story-card">
+            <div class="treasure-icon">🏝️</div>
+            <h3>Your Mission</h3>
+            <p>Find the hidden treasure with the fewest possible searches.</p>
+        </div>
+
+    </section>
+
+
+    <!-- OBJECTIVES -->
+    <section class="objective-section">
+
+        <h2>Mission Objectives</h2>
+
+        <div class="objective-grid">
+
+            <div class="objective-card">
+                <span>🎯</span>
+                <h3>Understand Binary Search</h3>
+                <p>Learn the basic concept of Binary Search.</p>
+            </div>
+
+            <div class="objective-card">
+                <span>🧠</span>
+                <h3>Make Decisions</h3>
+                <p>Choose whether to search the left or right half.</p>
+            </div>
+
+            <div class="objective-card">
+                <span>🚀</span>
+                <h3>Find the Treasure</h3>
+                <p>Complete the challenge efficiently.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ALGORITHM EXPLANATION -->
+    <section class="explanation-section">
+
+        <span class="tag">LEARN THE ALGORITHM</span>
+
+        <h2>What is Binary Search?</h2>
+
+        <p>
+            Binary Search is an efficient searching algorithm
+            that works on a sorted collection of elements.
+            It repeatedly divides the search area into two halves.
+        </p>
+
+        <div class="steps-grid">
+
+            <div class="step-card">
+                <span>01</span>
+                <h3>Find the Middle</h3>
+                <p>Check the middle element of the sorted array.</p>
+            </div>
+
+            <div class="step-card">
+                <span>02</span>
+                <h3>Compare the Value</h3>
+                <p>Compare the middle element with your target.</p>
+            </div>
+
+            <div class="step-card">
+                <span>03</span>
+                <h3>Reduce the Search</h3>
+                <p>Continue searching in the correct half.</p>
+            </div>
+
+            <div class="step-card">
+                <span>04</span>
+                <h3>Find the Target</h3>
+                <p>Repeat until the target is found or no elements remain.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- INTERACTIVE VISUALIZATION -->
+    <section class="visualization-section">
+
+        <span class="tag">INTERACTIVE LEARNING</span>
+
+        <h2>Try Binary Search Yourself</h2>
+
+        <p class="visual-description">
+            Find the target number 47 from the sorted array below.
+            Click the middle element to make your decision.
+        </p>
+
+        <div class="target-box">
+            Target Number: <strong>47</strong>
+        </div>
+
+        <div class="array-container" id="arrayContainer">
+
+            <button class="array-item" data-index="0">12</button>
+            <button class="array-item" data-index="1">25</button>
+            <button class="array-item" data-index="2">38</button>
+            <button class="array-item" data-index="3">47</button>
+            <button class="array-item" data-index="4">59</button>
+            <button class="array-item" data-index="5">64</button>
+            <button class="array-item" data-index="6">78</button>
+
+        </div>
+
+        <div class="visual-status" id="visualStatus">
+            Click the middle element to begin.
+        </div>
+
+        <div class="visual-controls">
+
+            <button id="resetButton" class="reset-btn">
+                Reset Mission
+            </button>
+
+        </div>
+
+        <div class="progress-info">
+            <span>Search Attempts:</span>
+            <strong id="attemptCount">0</strong>
+        </div>
+
+    </section>
+
+
+    <!-- QUIZ SECTION -->
+    <section class="quiz-section">
+
+        <span class="tag">TEST YOUR KNOWLEDGE</span>
+
+        <h2>Mission Quiz</h2>
+
+        <div class="quiz-card">
+
+            <h3>
+                What happens when the target is smaller
+                than the middle element?
+            </h3>
+
+            <label class="quiz-option">
+                <input type="radio" name="answer" value="a">
+                Search the right half
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="answer" value="b">
+                Search the left half
+            </label>
+
+            <label class="quiz-option">
+                <input type="radio" name="answer" value="c">
+                Stop searching
+            </label>
+
+            <button id="submitQuiz" class="quiz-btn">
+                Submit Answer
+            </button>
+
+            <p id="quizResult"></p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div class="footer-brand">
+                <h2>Logic<span>Verse.</span></h2>
+                <p>Learn Algorithms Through Stories and Visualization.</p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <a href="home.html">Home</a>
+                <a href="catalogue.html">Missions</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 LogicVerse. All Rights Reserved.</p>
+        </div>
+
+    </footer>
+
+
+    <script src="../static/js/mission.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1167 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* =================================
+   1. GLOBAL SETTINGS
+================================= */
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --accent: #818cf8;
+    --accent-light: #eef2ff;
+
+    --background: #f8faff;
+    --surface: #ffffff;
+
+    --text: #172554;
+    --muted: #64748b;
+    --border: #e2e8f0;
+
+    --success: #16a34a;
+
+    --shadow-sm: 0 4px 15px rgba(23, 37, 84, 0.05);
+    --shadow-md: 0 12px 35px rgba(23, 37, 84, 0.09);
+    --shadow-lg: 0 20px 55px rgba(23, 37, 84, 0.13);
+
+    --radius: 16px;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+::selection {
+    background: #c7d2fe;
+    color: var(--primary-dark);
+}
+
+
+/* =================================
+   2. NAVIGATION BAR
+================================= */
+
+.site-header {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    min-height: 80px;
+    padding: 15px 8%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    color: var(--text);
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-links a,
+.login-btn {
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.nav-links a {
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: var(--transition);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a:hover,
+.login-btn:hover {
+    color: var(--primary);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.register-btn,
+.nav-button,
+.primary-btn {
+    display: inline-block;
+
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+
+    color: white;
+    padding: 13px 25px;
+
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+
+    border: 1px solid transparent;
+    box-shadow: 0 6px 18px rgba(79, 70, 229, 0.2);
+
+    transition: var(--transition);
+}
+
+.register-btn:hover,
+.nav-button:hover,
+.primary-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+}
+
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: 0;
+    font-size: 26px;
+    color: var(--text);
+}
+
+
+/* =================================
+   3. HERO SECTION
+================================= */
+
+.hero {
+    min-height: 650px;
+    padding: 100px 8%;
+
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 65px;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(129, 140, 248, 0.18),
+            transparent 35%
+        ),
+        linear-gradient(120deg, #eef2ff, #ffffff 65%, #f5f3ff);
+
+    position: relative;
+    overflow: hidden;
+}
+
+.tag {
+    display: inline-block;
+    color: var(--primary);
+    background: #e0e7ff;
+
+    padding: 8px 15px;
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 5vw, 65px);
+    line-height: 1.13;
+    margin: 25px 0;
+
+    font-weight: 900;
+    letter-spacing: -2.5px;
+}
+
+.hero h1 span {
+    display: block;
+
+    background: linear-gradient(100deg, #4f46e5, #818cf8);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-content > p {
+    color: var(--muted);
+    max-width: 540px;
+    margin-bottom: 32px;
+
+    line-height: 1.9;
+    font-size: 15px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.secondary-btn {
+    display: inline-block;
+
+    border: 1px solid #cbd5e1;
+    background: white;
+
+    padding: 12px 24px;
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition: var(--transition);
+}
+
+.secondary-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+}
+
+.hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+
+.hero-stats div {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-stats strong {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.hero-stats span {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+
+/* =================================
+   4. HERO VISUALIZATION
+================================= */
+
+.hero-visual {
+    position: relative;
+    padding: 25px;
+
+    background: radial-gradient(
+        circle,
+        #c7d2fe 0%,
+        rgba(199, 210, 254, 0.15) 65%,
+        transparent 75%
+    );
+}
+
+.visual-card,
+.preview-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 32px;
+    border-radius: 22px;
+
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(224, 231, 255, 0.9);
+
+    transition: var(--transition);
+}
+
+.visual-card:hover,
+.preview-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 65px rgba(23, 37, 84, 0.15);
+}
+
+.visual-label {
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.visual-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 22px;
+    gap: 10px;
+}
+
+.visual-heading h3 {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.status {
+    font-size: 10px;
+    color: var(--success);
+    font-weight: 700;
+    background: #dcfce7;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.visual-description {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.array {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 32px 0;
+}
+
+.array span {
+    padding: 13px 16px;
+
+    background: #eef2ff;
+    color: var(--text);
+
+    border-radius: 9px;
+    font-weight: 800;
+    font-size: 14px;
+
+    border: 1px solid #e0e7ff;
+    transition: var(--transition);
+}
+
+.array span:hover {
+    transform: translateY(-4px);
+}
+
+.array .active {
+    background: linear-gradient(135deg, #4f46e5, #818cf8);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+}
+
+.search-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.search-info strong {
+    color: var(--text);
+}
+
+.progress-track {
+    height: 9px;
+    background: #e2e8f0;
+    border-radius: 20px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 65%;
+    height: 100%;
+
+    background: linear-gradient(90deg, #4f46e5, #818cf8);
+    border-radius: 20px;
+}
+
+.success-message {
+    color: var(--success);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.floating-badge {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    background: white;
+    padding: 13px 20px;
+    border-radius: 12px;
+
+    box-shadow: var(--shadow-md);
+    font-size: 12px;
+    font-weight: 800;
+    border: 1px solid var(--border);
+}
+
+
+/* =================================
+   5. COMMON SECTION SETTINGS
+================================= */
+
+.section-padding {
+    padding: 100px 8%;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-heading h2,
+.preview-content h2,
+.about h2 {
+    font-size: clamp(29px, 4vw, 40px);
+    margin: 18px 0;
+
+    font-weight: 900;
+    letter-spacing: -1.3px;
+}
+
+.section-heading p,
+.preview-content p,
+.about p {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+
+/* =================================
+   6. FEATURED MISSIONS
+================================= */
+
+.missions {
+    background: white;
+}
+
+.mission-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+}
+
+.mission-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    transition: var(--transition);
+}
+
+.mission-card:hover {
+    transform: translateY(-9px);
+    box-shadow: var(--shadow-lg);
+    border-color: #a5b4fc;
+}
+
+.mission-icon {
+    display: inline-flex;
+    font-size: 34px;
+    margin-bottom: 22px;
+
+    background: #eef2ff;
+    width: 65px;
+    height: 65px;
+
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+}
+
+.mission-level {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 6px 12px;
+    border-radius: 30px;
+    margin-bottom: 18px;
+}
+
+.beginner {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.intermediate {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.advanced {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.mission-card h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 13px;
+}
+
+.mission-card p {
+    color: var(--muted);
+    font-size: 13px;
+    min-height: 75px;
+    line-height: 1.9;
+}
+
+.card-btn {
+    display: inline-block;
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 800;
+    margin-top: 22px;
+    transition: var(--transition);
+}
+
+.card-btn:hover {
+    color: var(--primary-dark);
+    transform: translateX(5px);
+}
+
+.view-all {
+    text-align: center;
+    margin-top: 50px;
+}
+
+
+/* =================================
+   7. STORY BASED LEARNING
+================================= */
+
+.story-section {
+    background: #f8faff;
+}
+
+.story-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+}
+
+.story-card {
+    background: white;
+    padding: 32px;
+
+    border-radius: 20px;
+    border: 1px solid var(--border);
+
+    transition: var(--transition);
+}
+
+.story-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: #a5b4fc;
+}
+
+.story-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 65px;
+    height: 65px;
+
+    font-size: 35px;
+    background: #eef2ff;
+    border-radius: 16px;
+
+    margin-bottom: 22px;
+}
+
+.story-card h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.story-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 22px;
+}
+
+.story-topic {
+    display: inline-block;
+
+    background: #eeecff;
+    color: #6254c8;
+
+    padding: 7px 14px;
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =================================
+   8. INTERACTIVE LEARNING PREVIEW
+================================= */
+
+.learning-preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 70px;
+
+    background: linear-gradient(120deg, #eef2ff, #f5f3ff);
+}
+
+.preview-content p {
+    margin-bottom: 30px;
+    max-width: 500px;
+}
+
+.preview-box h3 {
+    margin-top: 22px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.preview-box > p {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 15px 0;
+    line-height: 1.8;
+}
+
+
+/* =================================
+   9. HOW IT WORKS
+================================= */
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+}
+
+.step-card {
+    padding: 35px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: white;
+    transition: var(--transition);
+}
+
+.step-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-7px);
+    box-shadow: var(--shadow-md);
+}
+
+.step-number {
+    font-size: 36px;
+    font-weight: 900;
+    color: #a5b4fc;
+}
+
+.step-card h3 {
+    font-size: 19px;
+    font-weight: 800;
+    margin: 18px 0;
+}
+
+.step-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+
+/* =================================
+   10. LEARNING PROGRESS
+================================= */
+
+.progress-section {
+    background: #f8faff;
+}
+
+.progress-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.progress-card {
+    background: white;
+    padding: 28px 20px;
+
+    text-align: center;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+
+    transition: var(--transition);
+}
+
+.progress-card:hover {
+    transform: translateY(-7px);
+    box-shadow: var(--shadow-md);
+    border-color: #a5b4fc;
+}
+
+.progress-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.progress-card h3 {
+    font-size: 27px;
+    color: var(--primary);
+    margin-bottom: 8px;
+    font-weight: 900;
+}
+
+.progress-card p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.progress-note {
+    text-align: center;
+    color: #88869b;
+    font-size: 12px;
+    margin-top: 22px;
+}
+
+
+/* =================================
+   11. ADAPTIVE CHALLENGE
+================================= */
+
+.challenge-section {
+    padding: 100px 8%;
+    text-align: center;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(129, 140, 248, 0.3),
+            transparent 35%
+        ),
+        linear-gradient(120deg, #312e81, #4f46e5);
+
+    color: white;
+}
+
+.challenge-section .tag {
+    color: #e0e7ff;
+    background: rgba(255, 255, 255, 0.13);
+}
+
+.challenge-section h2 {
+    font-size: clamp(29px, 4vw, 42px);
+    font-weight: 900;
+    margin: 22px 0;
+}
+
+.challenge-section > p {
+    color: #e0e7ff;
+    margin: 0 auto 35px;
+    max-width: 620px;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.challenge-levels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+
+    max-width: 900px;
+    margin: 0 auto 35px;
+}
+
+.challenge-level {
+    display: block;
+    text-decoration: none;
+    color: white;
+
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+
+    padding: 27px 20px;
+    border-radius: 16px;
+
+    transition: var(--transition);
+}
+
+.challenge-level:hover {
+    background: rgba(255, 255, 255, 0.20);
+    transform: translateY(-6px);
+}
+
+.challenge-level > span {
+    font-size: 30px;
+}
+
+.challenge-level h3 {
+    margin: 12px 0 8px;
+    font-size: 21px;
+}
+
+.challenge-level p {
+    color: #e0ddff;
+    font-size: 13px;
+    margin: 0;
+}
+
+.challenge-section > .primary-btn {
+    background: white;
+    color: var(--primary);
+    box-shadow: none;
+}
+
+.challenge-section > .primary-btn:hover {
+    background: #eef2ff;
+}
+
+
+/* =================================
+   12. ABOUT SECTION
+================================= */
+
+.about {
+    text-align: center;
+    background: white;
+}
+
+.about p {
+    max-width: 750px;
+    margin: auto;
+}
+
+
+/* =================================
+   13. FOOTER
+================================= */
+
+.footer {
+    background: #111b3d;
+    color: white;
+    padding: 65px 8% 25px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    padding-bottom: 50px;
+}
+
+.footer .logo {
+    color: white;
+}
+
+.footer .logo span {
+    color: #a5b4fc;
+}
+
+.footer-brand p {
+    color: #cbd5e1;
+    max-width: 340px;
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.footer-links h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.footer-links a {
+    color: #cbd5e1;
+    font-size: 13px;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: white;
+    transform: translateX(4px);
+}
+
+.footer-bottom {
+    border-top: 1px solid #ffffff20;
+    padding-top: 25px;
+    text-align: center;
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+
+/* =================================
+   14. ACCESSIBILITY
+================================= */
+
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* =================================
+   15. TABLET RESPONSIVE
+================================= */
+
+@media (max-width: 1000px) {
+
+    .navbar {
+        padding: 15px 5%;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .hero {
+        padding: 80px 6%;
+        gap: 35px;
+    }
+
+    .mission-container,
+    .story-container,
+    .steps-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .progress-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-padding {
+        padding: 80px 6%;
+    }
+}
+
+
+/* =================================
+   16. MOBILE RESPONSIVE
+================================= */
+
+@media (max-width: 700px) {
+
+    .navbar {
+        flex-wrap: wrap;
+        min-height: 70px;
+        padding: 12px 5%;
+    }
+
+    .menu-toggle {
+        display: block;
+        order: 3;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .nav-actions {
+        margin-left: auto;
+        gap: 12px;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        order: 4;
+
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+
+        padding: 20px 0;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .hero,
+    .learning-preview {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 75px 6%;
+        gap: 45px;
+    }
+
+    .hero h1 {
+        font-size: 44px;
+        letter-spacing: -1.5px;
+    }
+
+    .hero-stats {
+        gap: 25px;
+    }
+
+    .hero-visual {
+        padding: 12px;
+    }
+
+    .mission-container,
+    .story-container,
+    .steps-container {
+        grid-template-columns: 1fr;
+    }
+
+    .learning-preview {
+        gap: 40px;
+    }
+
+    .challenge-levels {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .section-padding {
+        padding: 70px 6%;
+    }
+
+    .challenge-section {
+        padding: 75px 6%;
+    }
+}
+
+
+/* =================================
+   17. SMALL MOBILE
+================================= */
+
+@media (max-width: 420px) {
+
+    .nav-actions {
+        gap: 8px;
+    }
+
+    .login-btn {
+        font-size: 11px;
+    }
+
+    .register-btn {
+        padding: 10px 12px;
+        font-size: 11px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .hero-buttons a {
+        text-align: center;
+    }
+
+    .hero-stats {
+        gap: 20px;
+    }
+
+    .visual-card,
+    .preview-box {
+        padding: 20px;
+    }
+
+    .mission-card,
+    .story-card,
+    .step-card {
+        padding: 25px;
+    }
+
+    .progress-card {
+        padding: 20px 10px;
+    }
+
+    .progress-card h3 {
+        font-size: 23px;
+    }
+
+    .section-heading {
+        margin-bottom: 40px;
+    }
+
+}

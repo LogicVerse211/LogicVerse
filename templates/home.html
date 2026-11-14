@@ -1,0 +1,665 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LogicVerse | Learn Algorithms Differently</title>
+
+    <meta name="description" content="Learn algorithms through interactive missions, stories and visualizations.">
+
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header class="site-header">
+    <nav class="navbar">
+
+        <a href="home.html" class="logo">
+            Logic<span>Verse.</span>
+        </a>
+
+        <div class="nav-links" id="navLinks">
+            <a href="home.html">Home</a>
+            <a href="catalogue.html">Missions</a>
+            <a href="#stories">Stories</a>
+            <a href="#visualization">Visualization</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#about">About</a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="register.html" class="register-btn">Get Started</a>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle"
+            aria-label="Toggle navigation">
+            ☰
+        </button>
+
+    </nav>
+</header>
+
+
+<!-- HERO SECTION -->
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="tag">LEARN • EXPLORE • MASTER</span>
+
+        <h1>
+            Turn Algorithms Into
+            <span>Adventures.</span>
+        </h1>
+
+        <p>
+            Discover the world of algorithms through interactive
+            missions, storytelling and step-by-step visualization.
+            Learn by doing, not just reading.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="catalogue.html" class="primary-btn">
+                Explore Missions →
+            </a>
+
+            <a href="#about" class="secondary-btn">
+                Learn More
+            </a>
+
+        </div>
+
+        <div class="hero-stats">
+
+            <div>
+                <strong>Interactive</strong>
+                <span>Learning</span>
+            </div>
+
+            <div>
+                <strong>Step-by-Step</strong>
+                <span>Visualization</span>
+            </div>
+
+            <div>
+                <strong>Learn & Solve</strong>
+                <span>Challenges</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO VISUALIZATION PREVIEW -->
+    <div class="hero-visual">
+
+        <div class="visual-card">
+
+            <span class="visual-label">
+                ALGORITHM VISUALIZATION
+            </span>
+
+            <div class="visual-heading">
+
+                <h3>Binary Search</h3>
+
+                <span class="status">● Preview</span>
+
+            </div>
+
+            <p class="visual-description">
+                Find the target element in a sorted array.
+            </p>
+
+            <div class="array">
+                <span>12</span>
+                <span>25</span>
+                <span class="active">38</span>
+                <span>47</span>
+                <span>59</span>
+            </div>
+
+            <div class="search-info">
+
+                <span>Target: <strong>38</strong></span>
+
+                <span>Middle: <strong>38</strong></span>
+
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-fill"></div>
+            </div>
+
+            <p class="success-message">
+                ✓ Target Found Successfully!
+            </p>
+
+        </div>
+
+        <div class="floating-badge">
+            Learn by Doing ✨
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURED MISSIONS -->
+<section class="missions section-padding" id="missions">
+
+    <div class="section-heading">
+
+        <span class="tag">EXPLORE AND LEARN</span>
+
+        <h2>Featured Missions</h2>
+
+        <p>
+            Start your algorithm learning journey with
+            exciting interactive missions.
+        </p>
+
+    </div>
+
+
+    <div class="mission-container">
+
+        <article class="mission-card">
+
+            <div class="mission-icon">🔍</div>
+
+            <span class="mission-level beginner">
+                BEGINNER
+            </span>
+
+            <h3>Binary Search</h3>
+
+            <p>
+                Find hidden treasures by searching
+                through a sorted collection.
+            </p>
+
+            <a href="mission.html" class="card-btn">
+                Explore Mission →
+            </a>
+
+        </article>
+
+
+        <article class="mission-card">
+
+            <div class="mission-icon">🌐</div>
+
+            <span class="mission-level intermediate">
+                INTERMEDIATE
+            </span>
+
+            <h3>Breadth First Search</h3>
+
+            <p>
+                Explore different paths and
+                rescue your target.
+            </p>
+
+            <a href="mission.html" class="card-btn">
+                Explore Mission →
+            </a>
+
+        </article>
+
+
+        <article class="mission-card">
+
+            <div class="mission-icon">🗺️</div>
+
+            <span class="mission-level advanced">
+                ADVANCED
+            </span>
+
+            <h3>Dijkstra's Algorithm</h3>
+
+            <p>
+                Discover the shortest route
+                to complete your mission.
+            </p>
+
+            <a href="mission.html" class="card-btn">
+                Explore Mission →
+            </a>
+
+        </article>
+
+    </div>
+
+
+    <div class="view-all">
+
+        <a href="catalogue.html" class="primary-btn">
+            View All Missions →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- STORY BASED LEARNING -->
+<section class="story-section section-padding" id="stories">
+
+    <div class="section-heading">
+
+        <span class="tag">LEARN THROUGH STORIES</span>
+
+        <h2>Every Algorithm Has a Story.</h2>
+
+        <p>
+            Understand complex algorithms through
+            real-world inspired missions and adventures.
+        </p>
+
+    </div>
+
+
+    <div class="story-container">
+
+        <article class="story-card">
+
+            <div class="story-icon">🏝️</div>
+
+            <h3>The Hidden Treasure</h3>
+
+            <p>
+                Use Binary Search to find a hidden treasure
+                among hundreds of sorted locations.
+            </p>
+
+            <span class="story-topic">
+                Binary Search
+            </span>
+
+        </article>
+
+
+        <article class="story-card">
+
+            <div class="story-icon">🚀</div>
+
+            <h3>Rescue Mission</h3>
+
+            <p>
+                Explore connected locations and find
+                your target using Breadth First Search.
+            </p>
+
+            <span class="story-topic">
+                BFS
+            </span>
+
+        </article>
+
+
+        <article class="story-card">
+
+            <div class="story-icon">🌍</div>
+
+            <h3>Journey to the City</h3>
+
+            <p>
+                Find the shortest route between cities
+                using Dijkstra's Algorithm.
+            </p>
+
+            <span class="story-topic">
+                Dijkstra's Algorithm
+            </span>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- INTERACTIVE VISUALIZATION -->
+<section class="learning-preview section-padding"
+    id="visualization">
+
+    <div class="preview-content">
+
+        <span class="tag">INTERACTIVE LEARNING</span>
+
+        <h2>See Algorithms in Action.</h2>
+
+        <p>
+            Understand how algorithms work through
+            step-by-step visualization and interactive decisions.
+        </p>
+
+        <a href="mission.html" class="primary-btn">
+            Try Visualization →
+        </a>
+
+    </div>
+
+
+    <div class="preview-box">
+
+        <span class="visual-label">
+            BINARY SEARCH EXAMPLE
+        </span>
+
+        <h3>Searching for Target: 30</h3>
+
+        <p class="visual-description">
+            Array: [10, 20, 30, 40, 50]
+        </p>
+
+        <div class="array">
+
+            <span>10</span>
+            <span>20</span>
+            <span class="active">30</span>
+            <span>40</span>
+            <span>50</span>
+
+        </div>
+
+        <div class="search-info">
+
+            <span>Low: <strong>1</strong></span>
+
+            <span>Middle: <strong>3</strong></span>
+
+            <span>High: <strong>5</strong></span>
+
+        </div>
+
+        <p>Step 1: Compare the middle element with target.</p>
+
+        <strong class="success-message">
+            ✓ Target Found!
+        </strong>
+
+        <p class="visual-description">
+            This is a sample visualization preview.
+            Full interaction will be added later.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works section-padding"
+    id="how-it-works">
+
+    <div class="section-heading">
+
+        <span class="tag">SIMPLE LEARNING PROCESS</span>
+
+        <h2>How LogicVerse Works</h2>
+
+        <p>
+            Three simple steps to master algorithms.
+        </p>
+
+    </div>
+
+
+    <div class="steps-container">
+
+        <article class="step-card">
+
+            <span class="step-number">01</span>
+
+            <h3>Choose a Mission</h3>
+
+            <p>
+                Select an algorithm and begin
+                your learning journey.
+            </p>
+
+        </article>
+
+
+        <article class="step-card">
+
+            <span class="step-number">02</span>
+
+            <h3>Learn Through Stories</h3>
+
+            <p>
+                Understand concepts through
+                interesting story scenarios.
+            </p>
+
+        </article>
+
+
+        <article class="step-card">
+
+            <span class="step-number">03</span>
+
+            <h3>Solve Challenges</h3>
+
+            <p>
+                Practice algorithms through
+                interactive challenges.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- LEARNING PROGRESS PREVIEW -->
+<section class="progress-section section-padding">
+
+    <div class="section-heading">
+
+        <span class="tag">TRACK YOUR JOURNEY</span>
+
+        <h2>Your Learning Progress</h2>
+
+        <p>
+            Keep track of your achievements
+            and improve your learning performance.
+        </p>
+
+    </div>
+
+
+    <div class="progress-container">
+
+        <article class="progress-card">
+
+            <div class="progress-icon">🎯</div>
+
+            <h3>12</h3>
+
+            <p>Missions Completed</p>
+
+        </article>
+
+
+        <article class="progress-card">
+
+            <div class="progress-icon">⭐</div>
+
+            <h3>850 XP</h3>
+
+            <p>Total Experience Points</p>
+
+        </article>
+
+
+        <article class="progress-card">
+
+            <div class="progress-icon">🔥</div>
+
+            <h3>5 Days</h3>
+
+            <p>Learning Streak</p>
+
+        </article>
+
+
+        <article class="progress-card">
+
+            <div class="progress-icon">📊</div>
+
+            <h3>75%</h3>
+
+            <p>Learning Progress</p>
+
+        </article>
+
+    </div>
+
+    <p class="progress-note">
+        * Sample progress data for demonstration.
+    </p>
+
+</section>
+
+
+<!-- ADAPTIVE CHALLENGE SECTION -->
+<section class="challenge-section section-padding">
+
+    <span class="tag">TEST YOUR KNOWLEDGE</span>
+
+    <h2>Ready to Challenge Yourself?</h2>
+
+    <p>
+        Choose your difficulty level and test
+        your understanding of algorithms.
+    </p>
+
+
+    <div class="challenge-levels">
+
+        <a href="quiz.html?level=easy"
+            class="challenge-level easy">
+
+            <span>🟢</span>
+
+            <h3>Easy</h3>
+
+            <p>Start with basic questions.</p>
+
+        </a>
+
+
+        <a href="quiz.html?level=medium"
+            class="challenge-level medium">
+
+            <span>🟡</span>
+
+            <h3>Medium</h3>
+
+            <p>Test your problem-solving skills.</p>
+
+        </a>
+
+
+        <a href="quiz.html?level=hard"
+            class="challenge-level hard">
+
+            <span>🔴</span>
+
+            <h3>Hard</h3>
+
+            <p>Take on advanced challenges.</p>
+
+        </a>
+
+    </div>
+
+    <a href="quiz.html" class="primary-btn">
+        Start Challenge →
+    </a>
+
+</section>
+
+
+<!-- ABOUT SECTION -->
+<section class="about section-padding" id="about">
+
+    <span class="tag">WHY LOGICVERSE?</span>
+
+    <h2>Learn By Doing, Not Memorizing.</h2>
+
+    <p>
+        LogicVerse transforms complex algorithms into engaging
+        learning experiences through storytelling, interactive
+        decisions, visualization and adaptive challenges.
+    </p>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-brand">
+
+            <a href="home.html" class="logo">
+                Logic<span>Verse.</span>
+            </a>
+
+            <p>
+                Making algorithm learning
+                interactive, simple and enjoyable.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>Quick Links</h3>
+
+            <a href="home.html">Home</a>
+
+            <a href="catalogue.html">Missions</a>
+
+            <a href="#stories">Stories</a>
+
+            <a href="#visualization">Visualization</a>
+
+            <a href="#about">About</a>
+
+            <a href="login.html">Login</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>© 2026 LogicVerse. All Rights Reserved.</p>
+
+    </div>
+
+</footer>
+
+
+<script src="../static/js/main.js"></script>
+
+</body>
+</html>
