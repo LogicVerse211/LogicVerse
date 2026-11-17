@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Catalogue | LogicVerse</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6fb;
+            color: #20243a;
+        }
+
+        header {
+            background: #171c35;
+            color: white;
+            padding: 22px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            font-size: 25px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: white;
+            background: #5965d8;
+            padding: 10px 18px;
+            border-radius: 8px;
+        }
+
+        .container {
+            width: 86%;
+            max-width: 1200px;
+            margin: 45px auto;
+        }
+
+        .heading {
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .heading p {
+            color: #70758a;
+            font-size: 16px;
+        }
+
+        #quizContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 24px;
+        }
+
+        .quiz-card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            transition: 0.3s;
+        }
+
+        .quiz-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .quiz-card h2 {
+            font-size: 21px;
+            margin-bottom: 13px;
+            color: #242a50;
+        }
+
+        .quiz-card p {
+            color: #70758a;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .marks {
+            display: inline-block;
+            background: #eef0ff;
+            color: #515bc5;
+            padding: 7px 12px;
+            border-radius: 7px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .start-btn {
+            display: block;
+            width: 100%;
+            border: none;
+            background: #5965d8;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .start-btn:hover {
+            background: #414dbd;
+        }
+
+        #message {
+            color: #70758a;
+            text-align: center;
+            padding: 30px;
+            grid-column: 1 / -1;
+        }
+
+        @media(max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+
+            .heading h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>LogicVerse</h2>
+    <a href="/accounts/learner-dashboard/" class="back-btn">
+        Dashboard
+    </a>
+</header>
+
+<div class="container">
+
+    <div class="heading">
+        <h1>Quiz Catalogue</h1>
+        <p>Test your knowledge and improve your problem-solving skills.</p>
+    </div>
+
+    <div id="quizContainer">
+        <p id="message">Loading available quizzes...</p>
+    </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", loadQuizzes);
+
+async function loadQuizzes() {
+
+    const token = localStorage.getItem("access_token");
+    const container = document.getElementById("quizContainer");
+
+    if (!token) {
+        window.location.href = "/login/";
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/quizzes/", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Unable to load quizzes.");
+        }
+
+        container.innerHTML = "";
+
+        if (data.length === 0) {
+            container.innerHTML =
+                '<p id="message">No quizzes are available right now.</p>';
+            return;
+        }
+
+        data.forEach(quiz => {
+
+            const card = document.createElement("div");
+            card.className = "quiz-card";
+
+            const title = document.createElement("h2");
+            title.textContent = quiz.title;
+
+            const description = document.createElement("p");
+            description.textContent =
+                quiz.description || "Test your knowledge with this quiz.";
+
+            const marks = document.createElement("span");
+            marks.className = "marks";
+            marks.textContent = `Total Marks: ${quiz.total_marks}`;
+
+            const button = document.createElement("button");
+            button.className = "start-btn";
+            button.textContent = "Start Quiz";
+
+            button.addEventListener("click", function () {
+                window.location.href = `/quiz/?id=${quiz.id}`;
+            });
+
+            card.append(title, description, marks, button);
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Quiz Catalogue Error:", error);
+        container.innerHTML = "";
+
+        const message = document.createElement("p");
+        message.id = "message";
+        message.textContent = error.message;
+        container.appendChild(message);
+    }
+}
+</script>
+
+</body>
+</html>

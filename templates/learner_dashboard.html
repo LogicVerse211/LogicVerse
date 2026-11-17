@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LogicVerse | Learner Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f5fb;
+            color: #252b48;
+        }
+
+        header {
+            background: #252b48;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .logout-btn {
+            background: #6254d9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #493bb8;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 22px;
+        }
+
+        .welcome {
+            background: linear-gradient(120deg, #252b48, #49408c);
+            color: white;
+            padding: 35px;
+            border-radius: 16px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 18px #252b4820;
+            text-align: left;
+        }
+
+        .welcome-label {
+            color: #c9c2ff;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin: 18px 0 12px;
+        }
+
+        .welcome h2 {
+            color: #c5baff;
+            font-size: 22px;
+            margin: 0 0 12px;
+        }
+
+        .welcome p {
+            color: #e1e1f0;
+            line-height: 1.7;
+            max-width: 650px;
+            margin: 0 0 18px;
+        }
+
+        .welcome-footer {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 13px;
+            box-shadow: 0 3px 12px #0000000d;
+            transition: transform 0.2s;
+            border: 1px solid #eeeef5;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 25px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card h3 {
+            color: #777;
+            font-size: 15px;
+            font-weight: normal;
+            margin: 0 0 12px;
+        }
+
+        .number {
+            color: #6254d9;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .section {
+            margin-top: 40px;
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .action-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #6254d9;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #493bb8;
+            transform: translateY(-2px);
+        }
+
+        .action-btn.secondary {
+            background: #252b48;
+        }
+
+        .action-btn.secondary:hover {
+            background: #394064;
+        }
+
+        .performance,
+        .history-container {
+            background: white;
+            padding: 25px;
+            border-radius: 13px;
+            box-shadow: 0 3px 12px #0000000d;
+            border: 1px solid #eeeef5;
+        }
+
+        #quizPerformance {
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* Quiz History */
+
+        .history-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eeeef5;
+        }
+
+        .history-table th {
+            background: #f4f5fb;
+            color: #252b48;
+            font-size: 14px;
+        }
+
+        .history-table td {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .history-table tr:hover {
+            background: #fafaff;
+        }
+
+        .empty-message {
+            color: #777;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .welcome {
+                padding: 25px;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .welcome h2 {
+                font-size: 19px;
+            }
+
+            header {
+                padding: 16px 5%;
+            }
+
+            .container {
+                margin-top: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h2>LogicVerse</h2>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="container">
+
+        <!-- Welcome Section -->
+        <div class="welcome">
+
+            <span class="welcome-label">
+                LEARNER SPACE | LOGICVERSE
+            </span>
+
+            <h1 id="learnerName">Welcome, Learner! 👋</h1>
+
+            <h2>Where Logic Meets Innovation.</h2>
+
+            <p>
+                Ready to challenge your mind?
+                Explore algorithms, sharpen your logic,
+                and make every step count.
+            </p>
+
+            <div class="welcome-footer">
+                Learn • Practice • Grow
+            </div>
+
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon">🚀</div>
+                <h3>Total Started Missions</h3>
+                <p class="number" id="totalStarted">0</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <h3>Completed Missions</h3>
+                <p class="number" id="totalCompleted">0</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <h3>Quiz Attempts</h3>
+                <p class="number" id="totalAttempts">0</p>
+            </div>
+
+        </div>
+
+        <!-- Explore Learning -->
+        <div class="section">
+
+            <h2>Explore Learning</h2>
+
+            <div class="actions">
+
+                <a href="/catalogue/" class="action-btn">
+                    🚀 Explore Missions
+                </a>
+
+                <a href="/quiz-catalogue/" class="action-btn secondary">
+                    🧠 Take Quiz
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- Quiz Performance -->
+        <div class="section">
+
+            <h2>My Quiz Performance</h2>
+
+            <div class="performance">
+                <div id="quizPerformance">
+                    Loading quiz performance...
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Quiz History -->
+        <div class="section">
+
+            <h2>My Quiz History</h2>
+
+            <div class="history-container">
+
+                <div id="quizHistory">
+                    Loading quiz history...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="/static/js/learner_dashboard.js"></script>
+
+</body>
+</html>

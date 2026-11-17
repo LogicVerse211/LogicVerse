@@ -1,0 +1,1063 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LogicVerse | Enter the Unknown</title>
+
+    <meta name="description" content="Enter the LogicVerse universe. Explore algorithms through mysterious missions, interactive stories and challenges.">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        /* =====================================
+           MYSTERY UNIVERSE - HOMEPAGE ADDITIONS
+        ===================================== */
+
+        .hero {
+            min-height: 730px;
+        }
+
+        .hero-content .tag {
+            margin-bottom: 5px;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(37px, 4.7vw, 62px);
+        }
+
+        .hero h1 span {
+            line-height: 1.35;
+        }
+
+        .hero-visual {
+            min-height: 470px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .universe-scene {
+            position: relative;
+            width: 100%;
+            max-width: 530px;
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            isolation: isolate;
+        }
+
+        .universe-scene::before {
+            content: "";
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: rgba(109, 40, 217, .18);
+            filter: blur(65px);
+            z-index: -1;
+            animation: universePulse 5s ease-in-out infinite;
+        }
+
+        .universe-scene::after {
+            content: "";
+            position: absolute;
+            inset: 8%;
+            border: 1px dashed rgba(167, 139, 250, .2);
+            border-radius: 50%;
+            animation: universeRotate 35s linear infinite;
+            z-index: -1;
+        }
+
+        .portal-orbit {
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border: 1px solid rgba(34, 211, 238, .25);
+            border-radius: 50%;
+            transform: rotate(-25deg) scaleY(.65);
+            box-shadow: 0 0 25px rgba(34, 211, 238, .08);
+            animation: orbitRotate 14s linear infinite;
+        }
+
+        .portal-orbit.orbit-two {
+            width: 400px;
+            height: 400px;
+            border-color: rgba(232, 121, 249, .2);
+            transform: rotate(45deg) scaleY(.7);
+            animation-duration: 20s;
+            animation-direction: reverse;
+        }
+
+        .portal-core {
+            position: relative;
+            width: 205px;
+            height: 285px;
+            border-radius: 50% 50% 43% 43%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(ellipse at center,
+                    rgba(34, 211, 238, .25),
+                    rgba(109, 40, 217, .28) 45%,
+                    rgba(10, 8, 28, .95) 75%);
+
+            border: 2px solid rgba(167, 139, 250, .75);
+
+            box-shadow:
+                0 0 15px rgba(139, 92, 246, .65),
+                0 0 45px rgba(139, 92, 246, .45),
+                inset 0 0 35px rgba(34, 211, 238, .18);
+
+            animation: portalFloat 5s ease-in-out infinite;
+        }
+
+        .portal-core::before {
+            content: "";
+            position: absolute;
+            inset: 13px;
+            border: 1px solid rgba(34, 211, 238, .65);
+            border-radius: 50%;
+            box-shadow: inset 0 0 25px rgba(34, 211, 238, .2);
+        }
+
+        .portal-core::after {
+            content: "";
+            position: absolute;
+            width: 95px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(
+                180deg,
+                rgba(34, 211, 238, .25),
+                rgba(139, 92, 246, .08),
+                transparent
+            );
+            filter: blur(12px);
+            animation: portalLight 3s ease-in-out infinite alternate;
+        }
+
+        .portal-symbol {
+            position: relative;
+            z-index: 2;
+            color: #e9d5ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 54px;
+            font-weight: 800;
+            text-shadow:
+                0 0 12px #a78bfa,
+                0 0 30px #8b5cf6;
+        }
+
+        .scene-node {
+            position: absolute;
+            z-index: 3;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #22d3ee;
+            border: 3px solid #bffaff;
+            box-shadow: 0 0 15px #22d3ee, 0 0 30px #22d3ee;
+            animation: nodeBlink 2s ease-in-out infinite alternate;
+        }
+
+        .node-one {
+            top: 18%;
+            left: 18%;
+        }
+
+        .node-two {
+            top: 25%;
+            right: 12%;
+            background: #c084fc;
+            border-color: #f3e8ff;
+            box-shadow: 0 0 15px #c084fc, 0 0 30px #c084fc;
+            animation-delay: .5s;
+        }
+
+        .node-three {
+            bottom: 19%;
+            left: 16%;
+            animation-delay: 1s;
+        }
+
+        .node-four {
+            bottom: 17%;
+            right: 17%;
+            background: #e879f9;
+            border-color: #fae8ff;
+            box-shadow: 0 0 15px #e879f9, 0 0 30px #e879f9;
+            animation-delay: 1.5s;
+        }
+
+        .scene-label {
+            position: absolute;
+            padding: 8px 12px;
+            background: rgba(12, 12, 29, .9);
+            border: 1px solid rgba(167, 139, 250, .3);
+            border-radius: 8px;
+            color: #c4b5fd;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 18px rgba(139, 92, 246, .15);
+        }
+
+        .label-top {
+            top: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .label-bottom {
+            bottom: 6%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #67e8f9;
+        }
+
+        .scene-line {
+            position: absolute;
+            height: 1px;
+            width: 100px;
+            background: linear-gradient(90deg, transparent, #8b5cf6, transparent);
+            transform: rotate(35deg);
+            opacity: .6;
+        }
+
+        .line-one {
+            top: 29%;
+            left: 12%;
+        }
+
+        .line-two {
+            bottom: 28%;
+            right: 10%;
+            transform: rotate(-35deg);
+        }
+
+        .scene-status {
+            position: absolute;
+            top: 2%;
+            right: 0;
+            color: #67e8f9;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        .mystery-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mystery-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(
+                120deg,
+                transparent 30%,
+                rgba(167, 139, 250, .06),
+                transparent 70%
+            );
+            transform: translateX(-100%);
+            transition: transform .7s ease;
+        }
+
+        .mystery-card:hover::after {
+            transform: translateX(100%);
+        }
+
+        .mission-code {
+            color: #67e8f9;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .story-card,
+        .mission-card,
+        .step-card,
+        .progress-card {
+            position: relative;
+        }
+
+        .network-preview {
+            position: relative;
+            min-height: 180px;
+            margin: 25px 0;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid rgba(167, 139, 250, .2);
+            border-radius: 15px;
+            background:
+                linear-gradient(rgba(139, 92, 246, .045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, .045) 1px, transparent 1px),
+                rgba(5, 5, 18, .7);
+            background-size: 22px 22px;
+        }
+
+        .network-graph {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            height: 145px;
+        }
+
+        .graph-node {
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            background: #241747;
+            border: 1px solid #a78bfa;
+            box-shadow: 0 0 15px rgba(139, 92, 246, .4);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            z-index: 2;
+        }
+
+        .graph-node.active-node {
+            background: #164e63;
+            border-color: #22d3ee;
+            box-shadow: 0 0 18px rgba(34, 211, 238, .65);
+        }
+
+        .graph-a { left: 4%; top: 40%; }
+        .graph-b { left: 29%; top: 8%; }
+        .graph-c { left: 29%; top: 70%; }
+        .graph-d { left: 60%; top: 8%; }
+        .graph-e { left: 60%; top: 70%; }
+        .graph-f { right: 3%; top: 40%; }
+
+        .graph-edge {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+            transform-origin: left center;
+            opacity: .65;
+            z-index: 1;
+        }
+
+        .edge-ab { left: 14%; top: 45%; width: 105px; transform: rotate(-30deg); }
+        .edge-ac { left: 14%; top: 53%; width: 105px; transform: rotate(30deg); }
+        .edge-bd { left: 39%; top: 20%; width: 105px; }
+        .edge-ce { left: 39%; top: 82%; width: 105px; }
+        .edge-de { left: 69%; top: 23%; width: 75px; transform: rotate(65deg); }
+        .edge-ef { left: 69%; top: 82%; width: 105px; transform: rotate(-30deg); }
+
+        .section-kicker {
+            color: #67e8f9;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .step-card .step-number {
+            display: inline-block;
+        }
+
+        .about .tag {
+            margin-bottom: 10px;
+        }
+
+        @keyframes universePulse {
+            0%, 100% { opacity: .55; transform: scale(.9); }
+            50% { opacity: 1; transform: scale(1.12); }
+        }
+
+        @keyframes universeRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes orbitRotate {
+            from { transform: rotate(0deg) scaleY(.65); }
+            to { transform: rotate(360deg) scaleY(.65); }
+        }
+
+        @keyframes portalFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.025); }
+        }
+
+        @keyframes portalLight {
+            from { opacity: .4; transform: scale(.8); }
+            to { opacity: 1; transform: scale(1.15); }
+        }
+
+        @keyframes nodeBlink {
+            from { opacity: .45; transform: scale(.8); }
+            to { opacity: 1; transform: scale(1.2); }
+        }
+
+        @media (max-width: 700px) {
+            .hero-visual {
+                min-height: 390px;
+            }
+
+            .universe-scene {
+                min-height: 370px;
+                transform: scale(.88);
+            }
+
+            .portal-orbit {
+                width: 280px;
+                height: 280px;
+            }
+
+            .portal-orbit.orbit-two {
+                width: 330px;
+                height: 330px;
+            }
+
+            .portal-core {
+                width: 170px;
+                height: 235px;
+            }
+
+            .scene-label {
+                font-size: 8px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .universe-scene {
+                transform: scale(.76);
+                width: 125%;
+                margin-left: -12.5%;
+            }
+
+            .hero-visual {
+                min-height: 340px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .universe-scene *,
+            .universe-scene::before,
+            .universe-scene::after {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<header class="site-header">
+    <nav class="navbar">
+
+        <a href="/" class="logo">
+            Logic<span>Verse.</span>
+        </a>
+
+        <div class="nav-links" id="navLinks">
+            <a href="/">Home</a>
+            <a href="/catalogue/">Missions</a>
+            <a href="#stories">Stories</a>
+            <a href="#visualization">Visualization</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#about">About</a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="/login/" class="login-btn">Login</a>
+            <a href="/signup/" class="register-btn">Get Started</a>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false">
+            ☰
+        </button>
+
+    </nav>
+</header>
+
+
+<!-- HERO: ENTER THE UNKNOWN -->
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="tag">✦ A NEW WORLD OF LOGIC</span>
+
+        <h1>
+            Enter the
+            <span>Unknown.</span>
+            Decode the Logic.
+        </h1>
+
+        <p>
+            Beyond every algorithm lies a mystery waiting to be solved.
+            Explore hidden paths, unlock challenging missions and
+            discover the power of logical thinking.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="/catalogue/" class="primary-btn">
+                Enter the Universe →
+            </a>
+
+            <a href="#about" class="secondary-btn">
+                Discover LogicVerse
+            </a>
+
+        </div>
+
+        <div class="hero-stats">
+
+            <div>
+                <strong>01</strong>
+                <span>Explore Missions</span>
+            </div>
+
+            <div>
+                <strong>02</strong>
+                <span>Decode Algorithms</span>
+            </div>
+
+            <div>
+                <strong>∞</strong>
+                <span>Possibilities</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MYSTERIOUS PORTAL -->
+    <div class="hero-visual">
+
+        <div class="universe-scene">
+
+            <div class="scene-status">● SYSTEM ONLINE</div>
+
+            <div class="portal-orbit"></div>
+            <div class="portal-orbit orbit-two"></div>
+
+            <div class="scene-line line-one"></div>
+            <div class="scene-line line-two"></div>
+
+            <div class="portal-core">
+                <span class="portal-symbol">?</span>
+            </div>
+
+            <div class="scene-node node-one"></div>
+            <div class="scene-node node-two"></div>
+            <div class="scene-node node-three"></div>
+            <div class="scene-node node-four"></div>
+
+            <div class="scene-label label-top">
+                UNKNOWN DIMENSION
+            </div>
+
+            <div class="scene-label label-bottom">
+                ACCESS THE NETWORK
+            </div>
+
+        </div>
+
+        <div class="floating-badge">
+            Your journey begins here
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURED MISSIONS -->
+<section class="missions section-padding" id="missions">
+
+    <div class="section-heading">
+        <span class="tag">✦ CLASSIFIED MISSIONS</span>
+
+        <h2>Choose Your Next Mission.</h2>
+
+        <p>
+            Every mission reveals a new secret.
+            Can you solve the challenges hidden inside?
+        </p>
+    </div>
+
+    <div class="mission-container">
+
+        <article class="mission-card mystery-card">
+
+            <div class="mission-code">MISSION_001</div>
+
+            <div class="mission-icon">🔍</div>
+
+            <span class="mission-level beginner">BEGINNER</span>
+
+            <h3>The Hidden Signal</h3>
+
+            <p>
+                Search through a mysterious collection
+                and discover the hidden target using Binary Search.
+            </p>
+
+            <a href="/mission/" class="card-btn">
+                Unlock Mission →
+            </a>
+
+        </article>
+
+
+        <article class="mission-card mystery-card">
+
+            <div class="mission-code">MISSION_002</div>
+
+            <div class="mission-icon">🌌</div>
+
+            <span class="mission-level intermediate">INTERMEDIATE</span>
+
+            <h3>The Lost Dimension</h3>
+
+            <p>
+                Navigate through connected locations
+                and discover the correct path using BFS.
+            </p>
+
+            <a href="/mission/" class="card-btn">
+                Unlock Mission →
+            </a>
+
+        </article>
+
+
+        <article class="mission-card mystery-card">
+
+            <div class="mission-code">MISSION_003</div>
+
+            <div class="mission-icon">🧭</div>
+
+            <span class="mission-level advanced">ADVANCED</span>
+
+            <h3>The Final Destination</h3>
+
+            <p>
+                Explore weighted paths and uncover
+                the shortest route using Dijkstra's Algorithm.
+            </p>
+
+            <a href="/mission/" class="card-btn">
+                Unlock Mission →
+            </a>
+
+        </article>
+
+    </div>
+
+    <div class="view-all">
+        <a href="/catalogue/" class="primary-btn">
+            Explore All Missions →
+        </a>
+    </div>
+
+</section>
+
+
+<!-- STORY SECTION -->
+<section class="story-section section-padding" id="stories">
+
+    <div class="section-heading">
+
+        <span class="tag">✦ STORIES FROM THE UNKNOWN</span>
+
+        <h2>Every Path Has a Secret.</h2>
+
+        <p>
+            Step into a world of challenges where
+            every decision takes you closer to the answer.
+        </p>
+
+    </div>
+
+    <div class="story-container">
+
+        <article class="story-card mystery-card">
+
+            <div class="mission-code">STORY_01</div>
+
+            <div class="story-icon">🏝️</div>
+
+            <h3>The Hidden Treasure</h3>
+
+            <p>
+                An ancient treasure is hidden among
+                countless locations. Find it before time runs out.
+            </p>
+
+            <span class="story-topic">Binary Search</span>
+
+        </article>
+
+
+        <article class="story-card mystery-card">
+
+            <div class="mission-code">STORY_02</div>
+
+            <div class="story-icon">🌌</div>
+
+            <h3>Rescue in the Unknown</h3>
+
+            <p>
+                A mysterious network separates you
+                from your destination. Find a path to complete the rescue.
+            </p>
+
+            <span class="story-topic">Breadth First Search</span>
+
+        </article>
+
+
+        <article class="story-card mystery-card">
+
+            <div class="mission-code">STORY_03</div>
+
+            <div class="story-icon">🌃</div>
+
+            <h3>The Forgotten City</h3>
+
+            <p>
+                Discover a forgotten city by finding
+                the most efficient route through a complex network.
+            </p>
+
+            <span class="story-topic">Dijkstra's Algorithm</span>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- INTERACTIVE VISUALIZATION -->
+<section class="learning-preview section-padding" id="visualization">
+
+    <div class="preview-content">
+
+        <span class="tag">✦ EXPLORE THE NETWORK</span>
+
+        <h2>Every Node Holds a Clue.</h2>
+
+        <p>
+            Algorithms are more than lines of code.
+            Discover how nodes connect, how paths are explored
+            and how a solution is found step by step.
+        </p>
+
+        <a href="/visualization/" class="primary-btn">
+            Explore Visualizations →
+        </a>
+
+    </div>
+
+
+    <div class="preview-box">
+
+        <span class="visual-label">NETWORK EXPLORATION // BFS</span>
+
+        <h3>Find the Hidden Destination</h3>
+
+        <p class="visual-description">
+            A mysterious network of connected nodes.
+        </p>
+
+        <div class="network-preview">
+
+            <div class="network-graph">
+
+                <div class="graph-edge edge-ab"></div>
+                <div class="graph-edge edge-ac"></div>
+                <div class="graph-edge edge-bd"></div>
+                <div class="graph-edge edge-ce"></div>
+                <div class="graph-edge edge-de"></div>
+                <div class="graph-edge edge-ef"></div>
+
+                <div class="graph-node active-node graph-a">A</div>
+                <div class="graph-node graph-b">B</div>
+                <div class="graph-node graph-c">C</div>
+                <div class="graph-node graph-d">D</div>
+                <div class="graph-node graph-e">E</div>
+                <div class="graph-node active-node graph-f">F</div>
+
+            </div>
+
+        </div>
+
+        <div class="search-info">
+            <span>Start: <strong>A</strong></span>
+            <span>Destination: <strong>F</strong></span>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill"></div>
+        </div>
+
+        <p class="success-message">
+            ✦ Network preview generated
+        </p>
+
+        <p class="visual-description">
+            This is a visual concept preview.
+            Interactive algorithm execution is available
+            on the Visualization page.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works section-padding" id="how-it-works">
+
+    <div class="section-heading">
+
+        <span class="tag">✦ YOUR JOURNEY STARTS HERE</span>
+
+        <h2>Three Steps. Endless Discoveries.</h2>
+
+        <p>
+            Enter the world of algorithms
+            and turn complex problems into solutions.
+        </p>
+
+    </div>
+
+
+    <div class="steps-container">
+
+        <article class="step-card">
+
+            <span class="step-number">01</span>
+
+            <h3>Enter a Mission</h3>
+
+            <p>
+                Choose a challenge and enter
+                a new algorithm adventure.
+            </p>
+
+        </article>
+
+
+        <article class="step-card">
+
+            <span class="step-number">02</span>
+
+            <h3>Explore the Logic</h3>
+
+            <p>
+                Follow each step, understand
+                the algorithm and discover how it works.
+            </p>
+
+        </article>
+
+
+        <article class="step-card">
+
+            <span class="step-number">03</span>
+
+            <h3>Unlock the Solution</h3>
+
+            <p>
+                Make decisions, solve problems
+                and complete your mission.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- LEARNING PROGRESS -->
+<section class="progress-section section-padding">
+
+    <div class="section-heading">
+
+        <span class="tag">✦ YOUR JOURNEY</span>
+
+        <h2>Every Discovery Counts.</h2>
+
+        <p>
+            Track your achievements and
+            see how far you have travelled.
+        </p>
+
+    </div>
+
+
+    <div class="progress-container">
+
+        <article class="progress-card">
+            <div class="progress-icon">🎯</div>
+            <h3>12</h3>
+            <p>Missions Completed</p>
+        </article>
+
+        <article class="progress-card">
+            <div class="progress-icon">✧</div>
+            <h3>850 XP</h3>
+            <p>Experience Points</p>
+        </article>
+
+        <article class="progress-card">
+            <div class="progress-icon">🔥</div>
+            <h3>5 Days</h3>
+            <p>Learning Streak</p>
+        </article>
+
+        <article class="progress-card">
+            <div class="progress-icon">◈</div>
+            <h3>75%</h3>
+            <p>Learning Progress</p>
+        </article>
+
+    </div>
+
+    <p class="progress-note">
+        * Sample progress data for demonstration.
+    </p>
+
+</section>
+
+
+<!-- CHALLENGE SECTION -->
+<section class="challenge-section section-padding">
+
+    <span class="tag">✦ THE FINAL TEST</span>
+
+    <h2>Are You Ready to Decode the Unknown?</h2>
+
+    <p>
+        Every challenge is a new mystery.
+        Choose your difficulty and prove your logical thinking skills.
+    </p>
+
+
+    <div class="challenge-levels">
+
+        <a href="/quiz-catalogue/?level=easy" class="challenge-level easy">
+            <span>🟢</span>
+            <h3>Initiate</h3>
+            <p>Begin your journey with basic challenges.</p>
+        </a>
+
+        <a href="/quiz-catalogue/?level=medium" class="challenge-level medium">
+            <span>🟡</span>
+            <h3>Explorer</h3>
+            <p>Face more complex logical problems.</p>
+        </a>
+
+        <a href="/quiz-catalogue/?level=hard" class="challenge-level hard">
+            <span>🔴</span>
+            <h3>Master</h3>
+            <p>Conquer the most advanced challenges.</p>
+        </a>
+
+    </div>
+
+    <a href="/quiz-catalogue/" class="primary-btn">
+        Begin the Challenge →
+    </a>
+
+</section>
+
+
+<!-- ABOUT -->
+<section class="about section-padding" id="about">
+
+    <span class="tag">✦ BEYOND THE ORDINARY</span>
+
+    <h2>Welcome to LogicVerse.</h2>
+
+    <p>
+        LogicVerse is an interactive algorithm learning platform
+        designed to make complex concepts easier to understand.
+        Through missions, storytelling, visualizations and challenges,
+        learners can explore algorithms, make decisions
+        and develop problem-solving skills.
+    </p>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <div class="footer-brand">
+
+            <a href="/" class="logo">
+                Logic<span>Verse.</span>
+            </a>
+
+            <p>
+                Enter the unknown.
+                Explore algorithms.
+                Discover the logic behind every solution.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>Explore</h3>
+
+            <a href="/">Home</a>
+            <a href="/catalogue/">Missions</a>
+            <a href="#stories">Stories</a>
+            <a href="#visualization">Visualization</a>
+            <a href="#about">About</a>
+            <a href="/login/">Login</a>
+            <a href="/signup/">Sign Up</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+        <p>© 2026 LogicVerse. All Rights Reserved.</p>
+    </div>
+
+</footer>
+
+
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

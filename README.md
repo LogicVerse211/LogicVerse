@@ -16,7 +16,7 @@ LogicVerse is an interactive educational platform that helps students learn algo
 ## Technology Stack
 - Frontend: HTML, CSS, JavaScript
 - Backend: Python, Django
-- Database: SQLite (initial development)
+- Database: MySQL (initial development)
 
 ## Team
 - Sharfuddin — Project Coordinator & Content Developer

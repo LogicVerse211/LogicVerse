@@ -1,0 +1,247 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission | LogicVerse</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mission.css' %}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="/" class="logo">Logic<span>Verse.</span></a>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/catalogue/" class="active">Missions</a>
+            <a href="/#about">About</a>
+        </div>
+
+        <a href="/catalogue/" class="nav-button">Back to Missions</a>
+    </nav>
+
+    <!-- MISSION HERO -->
+    <section class="mission-hero">
+        <span class="tag" id="missionLabel">Loading Mission...</span>
+
+        <h1 id="missionTitle">Loading...</h1>
+
+        <p id="missionDescription">
+            Please wait while mission details are loading.
+        </p>
+
+        <div class="mission-info">
+            <span id="missionAlgorithm">Algorithm</span>
+            <span id="missionDifficulty">Difficulty</span>
+        </div>
+    </section>
+
+    <!-- STORY SECTION -->
+    <section class="story-section">
+        <div class="story-content">
+            <span class="tag">YOUR STORY BEGINS</span>
+            <h2 id="storyTitle">Mission Story</h2>
+
+            <p id="missionStory">Loading mission story...</p>
+            <p id="missionInstructions"></p>
+        </div>
+
+        <div class="story-card">
+            <div class="treasure-icon">🗺️</div>
+            <h3>Your Mission</h3>
+            <p id="missionGoal">Loading learning goal...</p>
+        </div>
+    </section>
+
+    <!-- OBJECTIVES -->
+    <section class="objective-section">
+        <h2>Mission Objectives</h2>
+
+        <div class="objective-grid">
+            <div class="objective-card">
+                <span>🎯</span>
+                <h3>Understand the Algorithm</h3>
+                <p>Learn the basic concept of the selected algorithm.</p>
+            </div>
+
+            <div class="objective-card">
+                <span>🧠</span>
+                <h3>Make Decisions</h3>
+                <p>Understand how the algorithm makes decisions.</p>
+            </div>
+
+            <div class="objective-card">
+                <span>🚀</span>
+                <h3>Complete the Mission</h3>
+                <p>Apply your knowledge to complete the challenge.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALGORITHM EXPLANATION -->
+    <section class="explanation-section">
+        <span class="tag">LEARN THE ALGORITHM</span>
+        <h2>About This Algorithm</h2>
+
+        <p id="algorithmExplanation">
+            Learn how this algorithm works through the mission.
+        </p>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <span>01</span>
+                <h3>Understand</h3>
+                <p>Understand the problem and the given data.</p>
+            </div>
+
+            <div class="step-card">
+                <span>02</span>
+                <h3>Analyze</h3>
+                <p>Analyze the available choices and information.</p>
+            </div>
+
+            <div class="step-card">
+                <span>03</span>
+                <h3>Make Decisions</h3>
+                <p>Follow the correct steps of the algorithm.</p>
+            </div>
+
+            <div class="step-card">
+                <span>04</span>
+                <h3>Complete</h3>
+                <p>Reach the final result of the mission.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DYNAMIC ALGORITHM VISUALIZATION -->
+    <section class="visualization-section" id="visualizationSection" hidden>
+
+        <span class="tag">INTERACTIVE LEARNING</span>
+
+        <h2>Algorithm Visualization</h2>
+
+        <p class="visual-description" id="visualDescription">
+            Follow the algorithm step by step.
+        </p>
+
+        <!-- STEP INFORMATION -->
+        <div class="visual-step-info">
+            <h3 id="visualStepTitle">Loading Step...</h3>
+
+            <p id="visualStepExplanation">
+                Step explanation will appear here.
+            </p>
+        </div>
+
+<!-- MISSION DECISION SECTION -->
+<div class="decision-section" id="decisionSection">
+
+    <h3>Make Your Decision</h3>
+
+    <p>Choose the correct answer to continue.</p>
+
+    <div id="decisionContainer" class="decision-container">
+        <!-- Decision options will load here -->
+    </div>
+
+    <div id="decisionFeedback" class="decision-feedback"></div>
+
+</div>
+
+        <!-- TARGET INFORMATION -->
+        <div class="target-box" id="visualTargetBox" hidden>
+            Target Number:
+            <strong id="visualTarget"></strong>
+        </div>
+
+        <!-- ARRAY VISUALIZATION -->
+        <div class="array-container" id="arrayContainer"></div>
+
+        <!-- GRAPH VISUALIZATION -->
+        <div class="graph-container" id="graphContainer" hidden></div>
+
+        <!-- POINTER INFORMATION -->
+        <div class="pointer-info" id="pointerInfo"></div>
+
+        <!-- VISUAL STATUS -->
+        <div class="visual-status" id="visualStatus">
+            Visualization will appear here.
+        </div>
+
+        <!-- STEP NAVIGATION -->
+        <div class="visual-controls">
+
+            <button id="previousStepButton" class="reset-btn">
+                Previous Step
+            </button>
+
+            <button id="nextStepButton" class="quiz-btn">
+                Next Step
+            </button>
+
+        </div>
+
+        <!-- STEP PROGRESS -->
+        <div class="progress-info">
+            <span>Step:</span>
+            <strong id="currentStepNumber">0</strong>
+            /
+            <strong id="totalStepNumber">0</strong>
+        </div>
+
+    </section>
+
+    <!-- QUIZ SECTION -->
+    <section class="quiz-section" id="quizSection">
+        <span class="tag">TEST YOUR KNOWLEDGE</span>
+        <h2>Mission Quiz</h2>
+
+        <div class="quiz-card">
+            <p id="quizLoading">Quiz will be loaded here.</p>
+
+            <div id="quizContent" hidden>
+                <h3 id="quizQuestion"></h3>
+                <div id="quizOptions"></div>
+
+                <button id="submitQuiz" class="quiz-btn">
+                    Submit Answer
+                </button>
+
+                <p id="quizResult"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+
+            <div class="footer-brand">
+                <h2>Logic<span>Verse.</span></h2>
+                <p>Learn Algorithms Through Stories and Visualization.</p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <a href="/">Home</a>
+                <a href="/catalogue/">Missions</a>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 LogicVerse. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/mission.js' %}"></script>
+
+</body>
+</html>

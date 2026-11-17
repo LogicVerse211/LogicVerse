@@ -1,0 +1,363 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Algorithm Visualization | LogicVerse</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/visualization.css' %}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <a href="/" class="logo">
+            Logic<span>Verse.</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/catalogue/">Missions</a>
+            <a href="/visualization/" class="active">Visualization</a>
+            <a href="/#about">About</a>
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+    <section class="visual-hero">
+
+        <span class="tag">✦ INTERACTIVE ALGORITHM LAB</span>
+
+        <h1>
+            Algorithm <span>Visualization.</span>
+        </h1>
+
+        <p>
+            Explore algorithms visually. Understand every step,
+            follow the execution and discover how solutions work.
+        </p>
+
+    </section>
+
+
+    <!-- QUICK NAVIGATION -->
+    <div class="algorithm-nav">
+        <a href="#bfs">BFS</a>
+        <a href="#binary-search">Binary Search</a>
+        <a href="#dijkstra">Dijkstra</a>
+    </div>
+
+
+    <!-- ================= BFS ================= -->
+
+    <section class="visual-section" id="bfs">
+
+        <div class="visual-heading">
+
+            <span class="tag">01 // GRAPH TRAVERSAL</span>
+
+            <h2>🌐 Breadth First Search</h2>
+
+            <p>
+                Explore a graph level by level using a Queue.
+                Watch how BFS visits each connected node.
+            </p>
+
+        </div>
+
+        <div class="visual-panel">
+
+            <h3>BFS Graph Visualization</h3>
+
+            <div class="visual-controls">
+
+                <label>
+                    Start Node:
+                    <select id="bfsStart">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </label>
+
+                <button id="bfsStartBtn">Start BFS</button>
+
+                <button id="bfsNextBtn">Next Step</button>
+
+                <button id="bfsResetBtn" class="reset-btn">
+                    Reset
+                </button>
+
+            </div>
+
+            <div class="graph-area">
+
+                <svg id="bfsGraph" viewBox="0 0 600 300">
+
+                    <g stroke="#666" stroke-width="3">
+                        <line x1="300" y1="45" x2="150" y2="130"/>
+                        <line x1="300" y1="45" x2="450" y2="130"/>
+                        <line x1="150" y1="130" x2="75" y2="235"/>
+                        <line x1="150" y1="130" x2="225" y2="235"/>
+                        <line x1="450" y1="130" x2="375" y2="235"/>
+                        <line x1="450" y1="130" x2="525" y2="235"/>
+                    </g>
+
+                    <g id="bfsNodes"></g>
+
+                </svg>
+
+            </div>
+
+            <div class="visual-info">
+
+                <div class="info-box">
+                    Current Node
+                    <strong id="bfsCurrent">-</strong>
+                </div>
+
+                <div class="info-box">
+                    Queue
+                    <strong id="bfsQueue">[]</strong>
+                </div>
+
+                <div class="info-box">
+                    Visited Nodes
+                    <strong id="bfsVisited">[]</strong>
+                </div>
+
+            </div>
+
+            <p class="step-message" id="bfsMessage">
+                Click Start BFS to begin.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= BINARY SEARCH ================= -->
+
+    <section class="visual-section" id="binary-search">
+
+        <div class="visual-heading">
+
+            <span class="tag">02 // SEARCHING ALGORITHM</span>
+
+            <h2>🔍 Binary Search</h2>
+
+            <p>
+                Find a target value in a sorted array by repeatedly
+                dividing the search space into two halves.
+            </p>
+
+        </div>
+
+        <div class="visual-panel">
+
+            <h3>Binary Search Visualization</h3>
+
+            <div class="visual-controls">
+
+                <label>
+                    Target:
+                    <input
+                        type="number"
+                        id="binaryTarget"
+                        value="50"
+                    >
+                </label>
+
+                <button id="binaryStartBtn">
+                    Start Search
+                </button>
+
+                <button id="binaryNextBtn">
+                    Next Step
+                </button>
+
+                <button id="binaryResetBtn" class="reset-btn">
+                    Reset
+                </button>
+
+            </div>
+
+            <div class="graph-area">
+
+                <div class="array-area" id="binaryArray"></div>
+
+            </div>
+
+            <div class="visual-info">
+
+                <div class="info-box">
+                    Low
+                    <strong id="binaryLow">-</strong>
+                </div>
+
+                <div class="info-box">
+                    Mid
+                    <strong id="binaryMid">-</strong>
+                </div>
+
+                <div class="info-box">
+                    High
+                    <strong id="binaryHigh">-</strong>
+                </div>
+
+            </div>
+
+            <p class="step-message" id="binaryMessage">
+                Enter a target and click Start Search.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= DIJKSTRA ================= -->
+
+    <section class="visual-section" id="dijkstra">
+
+        <div class="visual-heading">
+
+            <span class="tag">03 // SHORTEST PATH</span>
+
+            <h2>🧭 Dijkstra's Algorithm</h2>
+
+            <p>
+                Discover the shortest path between two nodes
+                using weighted graph traversal.
+            </p>
+
+        </div>
+
+        <div class="visual-panel">
+
+            <h3>Dijkstra Graph Visualization</h3>
+
+            <div class="visual-controls">
+
+                <label>
+                    Start:
+                    <select id="dijkstraStart">
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                    </select>
+                </label>
+
+                <label>
+                    Destination:
+                    <select id="dijkstraEnd">
+                        <option value="F">F</option>
+                        <option value="E">E</option>
+                        <option value="D">D</option>
+                    </select>
+                </label>
+
+                <button id="dijkstraStartBtn">
+                    Start Dijkstra
+                </button>
+
+                <button id="dijkstraNextBtn">
+                    Next Step
+                </button>
+
+                <button id="dijkstraResetBtn" class="reset-btn">
+                    Reset
+                </button>
+
+            </div>
+
+            <div class="graph-area">
+
+                <svg id="dijkstraGraph" viewBox="0 0 600 300">
+
+                    <g id="dijkstraEdges"></g>
+                    <g id="dijkstraNodes"></g>
+
+                </svg>
+
+            </div>
+
+            <div class="visual-info">
+
+                <div class="info-box">
+                    Current Node
+                    <strong id="dijkstraCurrent">-</strong>
+                </div>
+
+                <div class="info-box">
+                    Visited Nodes
+                    <strong id="dijkstraVisited">[]</strong>
+                </div>
+
+                <div class="info-box">
+                    Shortest Distance
+                    <strong id="dijkstraDistance">∞</strong>
+                </div>
+
+            </div>
+
+            <p class="step-message" id="dijkstraMessage">
+                Click Start Dijkstra to begin.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <div class="footer-brand">
+
+                <h2>Logic<span>Verse.</span></h2>
+
+                <p>
+                    Learn Algorithms Through Stories,
+                    Decisions and Visualization.
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <h3>Quick Links</h3>
+
+                <a href="/">Home</a>
+                <a href="/catalogue/">Missions</a>
+                <a href="/visualization/">Visualization</a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>© 2026 LogicVerse. All Rights Reserved.</p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static 'js/visualization.js' %}"></script>
+
+</body>
+</html>

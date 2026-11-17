@@ -1,0 +1,1454 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | LogicVerse</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:
+    radial-gradient(circle at 10% 10%,rgba(91,33,182,.18),transparent 30%),
+    radial-gradient(circle at 90% 90%,rgba(8,145,178,.12),transparent 30%),
+    #070b19;
+    color:#e2e8f0;
+}
+
+.sidebar{
+    width:250px;
+    position:fixed;
+    inset:0 auto 0 0;
+    padding:30px 20px;
+    background:rgba(15,23,42,.96);
+    border-right:1px solid rgba(129,140,248,.2);
+    z-index:10;
+}
+
+.logo{
+    font-size:27px;
+    font-weight:800;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.logo span{
+    background:linear-gradient(90deg,#818cf8,#c084fc,#67e8f9);
+    background-clip:text;
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.sidebar-label{
+    text-align:center;
+    font-size:9px;
+    letter-spacing:3px;
+    color:#818cf8;
+    margin-bottom:40px;
+}
+
+.nav-title{
+    color:#64748b;
+    font-size:10px;
+    letter-spacing:2px;
+    margin:25px 10px 12px;
+}
+
+.nav-link{
+    display:block;
+    width:100%;
+    padding:13px 14px;
+    margin:7px 0;
+    border-radius:9px;
+    color:#94a3b8;
+    text-decoration:none;
+    font-size:13px;
+    background:transparent;
+    border:1px solid transparent;
+    text-align:left;
+    cursor:pointer;
+}
+
+.nav-link:hover,.nav-link.active{
+    color:#c4b5fd;
+    background:rgba(99,102,241,.15);
+    border-color:rgba(129,140,248,.18);
+}
+
+.logout-btn{
+    position:fixed;
+    bottom:25px;
+    left:25px;
+    width:200px;
+    padding:12px;
+    border:1px solid rgba(248,113,113,.3);
+    border-radius:9px;
+    color:#fca5a5;
+    background:rgba(127,29,29,.15);
+    cursor:pointer;
+    font-size:13px;
+}
+
+.logout-btn:hover{background:rgba(127,29,29,.3)}
+
+.main{
+    margin-left:250px;
+    padding:35px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:30px;
+}
+
+.topbar h1{font-size:27px;margin-bottom:8px}
+.topbar p{color:#94a3b8;font-size:13px}
+
+.admin-badge{
+    padding:10px 16px;
+    border:1px solid rgba(129,140,248,.3);
+    border-radius:30px;
+    color:#c4b5fd;
+    background:rgba(99,102,241,.12);
+    font-size:12px;
+}
+
+.welcome{
+    padding:30px;
+    border:1px solid rgba(129,140,248,.25);
+    border-radius:17px;
+    background:linear-gradient(120deg,rgba(49,46,129,.35),rgba(15,23,42,.8));
+    margin-bottom:30px;
+}
+
+.welcome small{
+    color:#67e8f9;
+    letter-spacing:3px;
+    font-size:10px;
+}
+
+.welcome h2{font-size:25px;margin:15px 0 10px}
+.welcome p{color:#94a3b8;font-size:13px;line-height:1.7}
+
+.section{display:none}
+.section.active{display:block}
+
+.section-title{font-size:19px;margin:25px 0 18px}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:17px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    padding:22px;
+    background:rgba(15,23,42,.8);
+    border:1px solid rgba(100,116,139,.25);
+    border-radius:13px;
+}
+
+.stat-icon{font-size:23px;margin-bottom:13px}
+.stat-card h3{font-size:13px;color:#cbd5e1;margin-bottom:8px}
+.stat-card p{font-size:24px;font-weight:bold;color:#a78bfa}
+
+.panel{
+    padding:24px;
+    background:rgba(15,23,42,.85);
+    border:1px solid rgba(100,116,139,.25);
+    border-radius:14px;
+    margin-bottom:22px;
+}
+
+.panel h3{font-size:16px;margin-bottom:20px}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.field{display:flex;flex-direction:column;gap:8px}
+.field.full{grid-column:1/-1}
+
+label{font-size:12px;color:#cbd5e1}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid rgba(129,140,248,.25);
+    border-radius:8px;
+    background:#0b1224;
+    color:#e2e8f0;
+    outline:none;
+    font-size:13px;
+}
+
+input:focus,select:focus,textarea:focus{
+    border-color:#818cf8;
+}
+
+textarea{min-height:90px;resize:vertical}
+
+.check-field{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size:13px;
+    color:#cbd5e1;
+}
+
+.check-field input{width:auto}
+
+.btn{
+    padding:11px 17px;
+    border:0;
+    border-radius:8px;
+    background:linear-gradient(90deg,#6366f1,#9333ea);
+    color:white;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn:hover{opacity:.88}
+
+.btn.secondary{background:#334155}
+.btn.danger{background:#991b1b}
+.btn.small{padding:8px 11px;margin:3px}
+
+.form-actions{
+    display:flex;
+    gap:10px;
+    margin-top:18px;
+    flex-wrap:wrap;
+}
+
+.table-wrap{overflow-x:auto}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th,td{
+    padding:14px 12px;
+    border-bottom:1px solid rgba(100,116,139,.2);
+    text-align:left;
+    font-size:12px;
+}
+
+th{color:#a5b4fc;font-weight:bold}
+td{color:#cbd5e1}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    background:rgba(99,102,241,.15);
+    color:#c4b5fd;
+}
+
+.badge.success{background:rgba(16,185,129,.15);color:#6ee7b7}
+.badge.warning{background:rgba(245,158,11,.15);color:#fcd34d}
+.badge.danger{background:rgba(239,68,68,.15);color:#fca5a5}
+
+.toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:17px;
+}
+
+.toolbar select{max-width:180px}
+
+.item-list{display:grid;gap:12px}
+
+.item-card{
+    padding:17px;
+    border:1px solid rgba(100,116,139,.25);
+    border-radius:11px;
+    background:rgba(7,11,25,.6);
+}
+
+.item-card h4{font-size:14px;margin-bottom:8px}
+.item-card p{font-size:12px;color:#94a3b8;line-height:1.6}
+
+.item-actions{margin-top:12px}
+
+.question-card{
+    margin-top:12px;
+    padding:15px;
+    border:1px solid rgba(129,140,248,.2);
+    border-radius:10px;
+    background:rgba(15,23,42,.7);
+}
+
+.choice-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    padding:8px 0;
+    font-size:12px;
+    color:#cbd5e1;
+}
+
+.message{
+    display:none;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:8px;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.message.show{display:block}
+.message.error{background:rgba(127,29,29,.25);color:#fca5a5}
+.message.success{background:rgba(6,78,59,.25);color:#6ee7b7}
+
+.empty{
+    padding:20px;
+    text-align:center;
+    color:#64748b;
+    font-size:13px;
+}
+
+@media(max-width:1100px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:700px){
+    .sidebar{
+        position:relative;
+        width:100%;
+        padding:20px;
+    }
+
+    .sidebar-label{margin-bottom:15px}
+
+    .nav-title{margin-top:15px}
+
+    .logout-btn{
+        position:static;
+        width:100%;
+        margin-top:15px;
+    }
+
+    .main{margin-left:0;padding:22px 16px}
+
+    .topbar{align-items:flex-start;flex-direction:column}
+
+    .stats{grid-template-columns:1fr 1fr}
+
+    .form-grid{grid-template-columns:1fr}
+    .field.full{grid-column:auto}
+}
+
+@media(max-width:430px){
+    .stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+
+    <div class="logo">Logic<span>Verse</span></div>
+    <div class="sidebar-label">ADMIN CONTROL CENTER</div>
+
+    <div class="nav-title">MAIN MENU</div>
+
+    <button class="nav-link active" data-section="dashboard">◈ Dashboard</button>
+    <button class="nav-link" data-section="users">◈ User Management</button>
+
+    <div class="nav-title">MANAGEMENT</div>
+
+    <button class="nav-link" data-section="missions">◈ Add Mission</button>
+    <button class="nav-link" data-section="quizzes">◈ Add Quiz</button>
+
+    <button class="logout-btn" id="logoutButton">↪ Logout</button>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="topbar">
+        <div>
+            <h1>Admin Dashboard</h1>
+            <p>Manage your LogicVerse platform.</p>
+        </div>
+        <div class="admin-badge">◆ ADMINISTRATOR</div>
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <section id="dashboard" class="section active">
+
+        <section class="welcome">
+            <small>THE ALGORITHM NEXUS</small>
+            <h2>Welcome to the Control Center.</h2>
+            <p>
+                Manage users, create algorithm missions and organize quizzes
+                from one place.
+            </p>
+        </section>
+
+        <h2 class="section-title">Platform Overview</h2>
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <h3>Total Users</h3>
+                <p id="totalUsers">-</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🎓</div>
+                <h3>Teachers</h3>
+                <p id="totalTeachers">-</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🧩</div>
+                <h3>Missions</h3>
+                <p id="totalMissions">-</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <h3>Quizzes</h3>
+                <p id="totalQuizzes">-</p>
+            </div>
+
+        </div>
+
+        <section class="panel">
+            <h3>Admin Controls</h3>
+            <p style="color:#94a3b8;font-size:13px;line-height:1.8">
+                Use the sidebar to view registered users, create and manage
+                missions, or create quizzes with questions and choices.
+            </p>
+        </section>
+
+    </section>
+
+
+    <!-- USER MANAGEMENT -->
+
+    <section id="users" class="section">
+
+        <h2 class="section-title">User Management</h2>
+
+        <div id="userMessage" class="message"></div>
+
+        <section class="panel">
+
+            <div class="toolbar">
+                <h3>Registered Users</h3>
+
+                <select id="userRoleFilter">
+                    <option value="all">All Users</option>
+                    <option value="learner">Learners</option>
+                    <option value="teacher">Teachers</option>
+                    <option value="admin">Admins</option>
+                </select>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Approval</th>
+                            <th>Joined Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <tr><td colspan="5">Loading users...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </section>
+
+
+    <!-- MISSION MANAGEMENT -->
+
+    <section id="missions" class="section">
+
+        <h2 class="section-title">Mission Management</h2>
+
+        <div id="missionMessage" class="message"></div>
+
+        <section class="panel">
+
+            <h3 id="missionFormTitle">Create New Mission</h3>
+
+            <form id="missionForm">
+
+                <input type="hidden" id="missionId">
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label>Mission Title</label>
+                        <input id="missionTitle" required maxlength="200">
+                    </div>
+
+                    <div class="field">
+                        <label>Algorithm</label>
+                        <input id="missionAlgorithm" required maxlength="100">
+                    </div>
+
+                    <div class="field">
+                        <label>Difficulty</label>
+                        <select id="missionDifficulty" required>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Active Status</label>
+                        <label class="check-field">
+                            <input type="checkbox" id="missionActive" checked>
+                            Active Mission
+                        </label>
+                    </div>
+
+                    <div class="field full">
+                        <label>Description</label>
+                        <textarea id="missionDescription" required></textarea>
+                    </div>
+
+                    <div class="field full">
+                        <label>Story</label>
+                        <textarea id="missionStory" required></textarea>
+                    </div>
+
+                    <div class="field full">
+                        <label>Learning Goal</label>
+                        <textarea id="missionGoal" required></textarea>
+                    </div>
+
+                    <div class="field full">
+                        <label>Instructions</label>
+                        <textarea id="missionInstructions" required></textarea>
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn" type="submit" id="missionSubmitButton">
+                        Create Mission
+                    </button>
+
+                    <button class="btn secondary" type="button"
+                            id="missionCancelButton" style="display:none">
+                        Cancel Edit
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+        <section class="panel">
+            <h3>Existing Missions</h3>
+            <div id="missionList" class="item-list">
+                <div class="empty">Loading missions...</div>
+            </div>
+        </section>
+
+    </section>
+
+
+    <!-- QUIZ MANAGEMENT -->
+
+    <section id="quizzes" class="section">
+
+        <h2 class="section-title">Quiz Management</h2>
+
+        <div id="quizMessage" class="message"></div>
+
+        <section class="panel">
+
+            <h3 id="quizFormTitle">Create New Quiz</h3>
+
+            <form id="quizForm">
+
+                <input type="hidden" id="quizId">
+
+                <div class="form-grid">
+
+                    <div class="field full">
+                        <label>Select Mission</label>
+                        <select id="quizMission" required>
+                            <option value="">Select a mission</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Quiz Title</label>
+                        <input id="quizTitle" required maxlength="200">
+                    </div>
+
+                    <div class="field">
+                        <label>Total Marks</label>
+                        <input id="quizMarks" type="number" min="0" value="0" required>
+                    </div>
+
+                    <div class="field full">
+                        <label>Description</label>
+                        <textarea id="quizDescription"></textarea>
+                    </div>
+
+                    <div class="field full">
+                        <label class="check-field">
+                            <input type="checkbox" id="quizActive" checked>
+                            Active Quiz
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn" type="submit" id="quizSubmitButton">
+                        Create Quiz
+                    </button>
+
+                    <button class="btn secondary" type="button"
+                            id="quizCancelButton" style="display:none">
+                        Cancel Edit
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <section class="panel">
+
+            <h3>Existing Quizzes</h3>
+
+            <div id="quizList" class="item-list">
+                <div class="empty">Loading quizzes...</div>
+            </div>
+
+        </section>
+
+
+        <!-- QUESTION MANAGEMENT -->
+
+        <section class="panel" id="questionPanel" style="display:none">
+
+            <h3 id="questionPanelTitle">Manage Questions</h3>
+
+            <form id="questionForm">
+
+                <input type="hidden" id="questionQuizId">
+
+                <div class="form-grid">
+
+                    <div class="field full">
+                        <label>Question</label>
+                        <textarea id="questionText" required></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label>Marks</label>
+                        <input type="number" id="questionMarks" min="1" value="1" required>
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn" type="submit">Add Question</button>
+                </div>
+
+            </form>
+
+            <div id="questionList" class="item-list" style="margin-top:20px"></div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<script>
+const API = {
+    users: "/accounts/admin/users/",
+    missions: "/api/missions/admin/missions/",
+    quizzes: "/api/quizzes/admin/quizzes/"
+};
+
+const token = () => localStorage.getItem("access_token");
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[char]);
+}
+
+async function apiRequest(url, options = {}) {
+    const accessToken = token();
+
+    if (!accessToken) {
+        window.location.href = "/login/";
+        throw new Error("Login required.");
+    }
+
+    const response = await fetch(url, {
+        ...options,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`,
+            ...(options.headers || {})
+        }
+    });
+
+    if (response.status === 204) return null;
+
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+        const message = data.detail ||
+            data.error ||
+            Object.entries(data).map(([key, value]) =>
+                `${key}: ${Array.isArray(value) ? value.join(", ") : value}`
+            ).join("\n") ||
+            "Request failed.";
+
+        throw new Error(message);
+    }
+
+    return data;
+}
+
+function showMessage(id, message, type = "success") {
+    const box = document.getElementById(id);
+    box.textContent = message;
+    box.className = `message show ${type}`;
+
+    setTimeout(() => {
+        box.className = "message";
+    }, 5000);
+}
+
+
+// ==========================================
+// NAVIGATION
+// ==========================================
+
+document.querySelectorAll(".nav-link").forEach(button => {
+    button.addEventListener("click", () => {
+
+        document.querySelectorAll(".nav-link").forEach(item =>
+            item.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        document.querySelectorAll(".section").forEach(section =>
+            section.classList.remove("active")
+        );
+
+        document.getElementById(button.dataset.section)
+            .classList.add("active");
+
+        if (button.dataset.section === "users") loadUsers();
+
+        if (button.dataset.section === "missions") loadMissions();
+
+        if (button.dataset.section === "quizzes") {
+            loadMissions();
+            loadQuizzes();
+        }
+    });
+});
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+document.getElementById("logoutButton").addEventListener("click", () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    window.location.href = "/login/";
+});
+
+
+// ==========================================
+// USER MANAGEMENT
+// ==========================================
+
+let allUsers = [];
+
+async function loadUsers() {
+    const tbody = document.getElementById("userTableBody");
+    tbody.innerHTML = '<tr><td colspan="5">Loading users...</td></tr>';
+
+    try {
+        const data = await apiRequest(API.users);
+        allUsers = data.users || [];
+
+        document.getElementById("totalUsers").textContent =
+            data.total_users ?? allUsers.length;
+
+        document.getElementById("totalTeachers").textContent =
+            allUsers.filter(user => user.role === "teacher").length;
+
+        renderUsers();
+
+    } catch (error) {
+        tbody.innerHTML =
+            `<tr><td colspan="5">${escapeHTML(error.message)}</td></tr>`;
+        showMessage("userMessage", error.message, "error");
+    }
+}
+
+function renderUsers() {
+    const filter = document.getElementById("userRoleFilter").value;
+
+    const users = allUsers.filter(user =>
+        filter === "all" || user.role === filter
+    );
+
+    const tbody = document.getElementById("userTableBody");
+
+    if (!users.length) {
+        tbody.innerHTML =
+            '<tr><td colspan="5" class="empty">No users found.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = users.map(user => {
+
+        const approval = user.role === "admin"
+            ? '<span class="badge success">Admin</span>'
+            : user.is_approved
+                ? '<span class="badge success">Approved</span>'
+                : '<span class="badge warning">Pending</span>';
+
+        return `
+            <tr>
+                <td>${escapeHTML(user.username)}</td>
+                <td>${escapeHTML(user.email || "-")}</td>
+                <td><span class="badge">${escapeHTML(user.role)}</span></td>
+                <td>${approval}</td>
+                <td>${user.date_joined
+                    ? new Date(user.date_joined).toLocaleDateString()
+                    : "-"}</td>
+            </tr>
+        `;
+    }).join("");
+}
+
+document.getElementById("userRoleFilter")
+    .addEventListener("change", renderUsers);
+
+
+// ==========================================
+// MISSION MANAGEMENT
+// ==========================================
+
+let missionCache = [];
+
+async function loadMissions() {
+    const list = document.getElementById("missionList");
+    list.innerHTML = '<div class="empty">Loading missions...</div>';
+
+    try {
+        missionCache = await apiRequest(API.missions);
+
+        document.getElementById("totalMissions").textContent =
+            missionCache.length;
+
+        renderMissions();
+        populateMissionSelect();
+
+    } catch (error) {
+        list.innerHTML =
+            `<div class="empty">${escapeHTML(error.message)}</div>`;
+        showMessage("missionMessage", error.message, "error");
+    }
+}
+
+function renderMissions() {
+    const list = document.getElementById("missionList");
+
+    if (!missionCache.length) {
+        list.innerHTML = '<div class="empty">No missions found.</div>';
+        return;
+    }
+
+    list.innerHTML = missionCache.map(mission => `
+        <div class="item-card">
+            <h4>${escapeHTML(mission.title)}</h4>
+            <p>
+                Algorithm: ${escapeHTML(mission.algorithm)}
+                | Difficulty: ${escapeHTML(mission.difficulty)}
+            </p>
+            <p>Status:
+                ${mission.is_active ? "Active" : "Inactive"}
+            </p>
+            <div class="item-actions">
+                <button class="btn small"
+                    onclick="editMission(${mission.id})">Edit</button>
+                <button class="btn danger small"
+                    onclick="deleteMission(${mission.id})">Delete</button>
+            </div>
+        </div>
+    `).join("");
+}
+
+document.getElementById("missionForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const id = document.getElementById("missionId").value;
+
+    const payload = {
+        title: document.getElementById("missionTitle").value.trim(),
+        algorithm: document.getElementById("missionAlgorithm").value.trim(),
+        difficulty: document.getElementById("missionDifficulty").value,
+        description: document.getElementById("missionDescription").value.trim(),
+        story: document.getElementById("missionStory").value.trim(),
+        learning_goal: document.getElementById("missionGoal").value.trim(),
+        instructions: document.getElementById("missionInstructions").value.trim(),
+        is_active: document.getElementById("missionActive").checked
+    };
+
+    try {
+        await apiRequest(
+            id ? `${API.missions}${id}/` : API.missions,
+            {
+                method: id ? "PATCH" : "POST",
+                body: JSON.stringify(payload)
+            }
+        );
+
+        showMessage(
+            "missionMessage",
+            id ? "Mission updated successfully." : "Mission created successfully."
+        );
+
+        resetMissionForm();
+        await loadMissions();
+
+    } catch (error) {
+        showMessage("missionMessage", error.message, "error");
+    }
+});
+
+function editMission(id) {
+    const mission = missionCache.find(item => item.id === id);
+    if (!mission) return;
+
+    document.getElementById("missionId").value = mission.id;
+    document.getElementById("missionTitle").value = mission.title;
+    document.getElementById("missionAlgorithm").value = mission.algorithm;
+    document.getElementById("missionDifficulty").value = mission.difficulty;
+    document.getElementById("missionDescription").value = mission.description;
+    document.getElementById("missionStory").value = mission.story;
+    document.getElementById("missionGoal").value = mission.learning_goal;
+    document.getElementById("missionInstructions").value = mission.instructions;
+    document.getElementById("missionActive").checked = mission.is_active;
+
+    document.getElementById("missionFormTitle").textContent = "Edit Mission";
+    document.getElementById("missionSubmitButton").textContent = "Update Mission";
+    document.getElementById("missionCancelButton").style.display = "inline-block";
+
+    document.getElementById("missionForm").scrollIntoView({behavior:"smooth"});
+}
+
+async function deleteMission(id) {
+    if (!confirm("Are you sure you want to delete this mission? Its related quizzes may also be deleted.")) return;
+
+    try {
+        await apiRequest(`${API.missions}${id}/`, {method:"DELETE"});
+        showMessage("missionMessage", "Mission deleted successfully.");
+        await loadMissions();
+    } catch (error) {
+        showMessage("missionMessage", error.message, "error");
+    }
+}
+
+function resetMissionForm() {
+    document.getElementById("missionForm").reset();
+    document.getElementById("missionId").value = "";
+    document.getElementById("missionActive").checked = true;
+    document.getElementById("missionFormTitle").textContent = "Create New Mission";
+    document.getElementById("missionSubmitButton").textContent = "Create Mission";
+    document.getElementById("missionCancelButton").style.display = "none";
+}
+
+document.getElementById("missionCancelButton")
+    .addEventListener("click", resetMissionForm);
+
+
+// ==========================================
+// QUIZ MANAGEMENT
+// ==========================================
+
+let quizCache = [];
+
+async function loadQuizzes() {
+    const list = document.getElementById("quizList");
+    list.innerHTML = '<div class="empty">Loading quizzes...</div>';
+
+    try {
+        quizCache = await apiRequest(API.quizzes);
+
+        document.getElementById("totalQuizzes").textContent =
+            quizCache.length;
+
+        renderQuizzes();
+
+    } catch (error) {
+        list.innerHTML =
+            `<div class="empty">${escapeHTML(error.message)}</div>`;
+        showMessage("quizMessage", error.message, "error");
+    }
+}
+
+function populateMissionSelect() {
+    const select = document.getElementById("quizMission");
+    const current = select.value;
+
+    select.innerHTML = '<option value="">Select a mission</option>';
+
+    missionCache.forEach(mission => {
+        select.innerHTML += `
+            <option value="${mission.id}">
+                ${escapeHTML(mission.title)}
+            </option>
+        `;
+    });
+
+    if (current) select.value = current;
+}
+
+function renderQuizzes() {
+    const list = document.getElementById("quizList");
+
+    if (!quizCache.length) {
+        list.innerHTML = '<div class="empty">No quizzes found.</div>';
+        return;
+    }
+
+    list.innerHTML = quizCache.map(quiz => `
+        <div class="item-card">
+            <h4>${escapeHTML(quiz.title)}</h4>
+            <p>${escapeHTML(quiz.description || "No description")}</p>
+            <p>Mission ID: ${quiz.mission} | Marks: ${quiz.total_marks}</p>
+            <p>Status: ${quiz.is_active ? "Active" : "Inactive"}</p>
+            <div class="item-actions">
+                <button class="btn small"
+                    onclick="editQuiz(${quiz.id})">Edit</button>
+                <button class="btn small secondary"
+                    onclick="manageQuestions(${quiz.id})">Manage Questions</button>
+                <button class="btn danger small"
+                    onclick="deleteQuiz(${quiz.id})">Delete</button>
+            </div>
+        </div>
+    `).join("");
+}
+
+document.getElementById("quizForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const id = document.getElementById("quizId").value;
+
+    const payload = {
+        mission: Number(document.getElementById("quizMission").value),
+        title: document.getElementById("quizTitle").value.trim(),
+        description: document.getElementById("quizDescription").value.trim(),
+        total_marks: Number(document.getElementById("quizMarks").value),
+        is_active: document.getElementById("quizActive").checked
+    };
+
+    try {
+        await apiRequest(
+            id ? `${API.quizzes}${id}/` : API.quizzes,
+            {
+                method: id ? "PATCH" : "POST",
+                body: JSON.stringify(payload)
+            }
+        );
+
+        showMessage(
+            "quizMessage",
+            id ? "Quiz updated successfully." : "Quiz created successfully."
+        );
+
+        resetQuizForm();
+        await loadQuizzes();
+
+    } catch (error) {
+        showMessage("quizMessage", error.message, "error");
+    }
+});
+
+function editQuiz(id) {
+    const quiz = quizCache.find(item => item.id === id);
+    if (!quiz) return;
+
+    document.getElementById("quizId").value = quiz.id;
+    document.getElementById("quizMission").value = quiz.mission;
+    document.getElementById("quizTitle").value = quiz.title;
+    document.getElementById("quizDescription").value = quiz.description || "";
+    document.getElementById("quizMarks").value = quiz.total_marks;
+    document.getElementById("quizActive").checked = quiz.is_active;
+
+    document.getElementById("quizFormTitle").textContent = "Edit Quiz";
+    document.getElementById("quizSubmitButton").textContent = "Update Quiz";
+    document.getElementById("quizCancelButton").style.display = "inline-block";
+
+    document.getElementById("quizForm").scrollIntoView({behavior:"smooth"});
+}
+
+async function deleteQuiz(id) {
+    if (!confirm("Are you sure you want to delete this quiz? Its questions and choices will also be deleted.")) return;
+
+    try {
+        await apiRequest(`${API.quizzes}${id}/`, {method:"DELETE"});
+        document.getElementById("questionPanel").style.display = "none";
+        showMessage("quizMessage", "Quiz deleted successfully.");
+        await loadQuizzes();
+    } catch (error) {
+        showMessage("quizMessage", error.message, "error");
+    }
+}
+
+function resetQuizForm() {
+    document.getElementById("quizForm").reset();
+    document.getElementById("quizId").value = "";
+    document.getElementById("quizActive").checked = true;
+    document.getElementById("quizFormTitle").textContent = "Create New Quiz";
+    document.getElementById("quizSubmitButton").textContent = "Create Quiz";
+    document.getElementById("quizCancelButton").style.display = "none";
+}
+
+document.getElementById("quizCancelButton")
+    .addEventListener("click", resetQuizForm);
+
+
+// ==========================================
+// QUESTION MANAGEMENT
+// ==========================================
+
+async function manageQuestions(quizId) {
+    document.getElementById("questionPanel").style.display = "block";
+    document.getElementById("questionQuizId").value = quizId;
+
+    const quiz = quizCache.find(item => item.id === quizId);
+
+    document.getElementById("questionPanelTitle").textContent =
+        `Questions: ${quiz ? quiz.title : "Selected Quiz"}`;
+
+    document.getElementById("questionPanel")
+        .scrollIntoView({behavior:"smooth"});
+
+    await loadQuestions(quizId);
+}
+
+async function loadQuestions(quizId) {
+    const list = document.getElementById("questionList");
+    list.innerHTML = '<div class="empty">Loading questions...</div>';
+
+    try {
+        const questions = await apiRequest(
+            `${API.quizzes}${quizId}/questions/`
+        );
+
+        if (!questions.length) {
+            list.innerHTML = '<div class="empty">No questions added yet.</div>';
+            return;
+        }
+
+        list.innerHTML = questions.map(question => `
+            <div class="question-card">
+                <h4>${escapeHTML(question.question_text)}</h4>
+                <p>Marks: ${question.marks} | Question ID: ${question.id}</p>
+
+                <div id="choices-${question.id}">
+                    Loading choices...
+                </div>
+
+                <form onsubmit="addChoice(event,${question.id})"
+                      style="margin-top:12px">
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label>New Choice</label>
+                            <input id="choice-text-${question.id}"
+                                   required maxlength="255">
+                        </div>
+
+                        <div class="field">
+                            <label>Correct Answer?</label>
+                            <label class="check-field">
+                                <input type="checkbox"
+                                       id="choice-correct-${question.id}">
+                                This is correct
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn small" type="submit">Add Choice</button>
+                </form>
+
+                <div class="item-actions">
+                    <button class="btn secondary small"
+                        onclick="editQuestion(${question.id},${quizId})">Edit Question</button>
+                    <button class="btn danger small"
+                        onclick="deleteQuestion(${question.id},${quizId})">Delete Question</button>
+                </div>
+            </div>
+        `).join("");
+
+        for (const question of questions) {
+            await loadChoices(question.id);
+        }
+
+    } catch (error) {
+        list.innerHTML =
+            `<div class="empty">${escapeHTML(error.message)}</div>`;
+    }
+}
+
+document.getElementById("questionForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const quizId = document.getElementById("questionQuizId").value;
+
+    const payload = {
+        question_text: document.getElementById("questionText").value.trim(),
+        marks: Number(document.getElementById("questionMarks").value)
+    };
+
+    try {
+        await apiRequest(
+            `${API.quizzes}${quizId}/questions/`,
+            {
+                method:"POST",
+                body:JSON.stringify(payload)
+            }
+        );
+
+        document.getElementById("questionForm").reset();
+        document.getElementById("questionMarks").value = 1;
+
+        showMessage("quizMessage", "Question added successfully.");
+        await loadQuestions(Number(quizId));
+
+    } catch (error) {
+        showMessage("quizMessage", error.message, "error");
+    }
+});
+
+async function editQuestion(questionId, quizId) {
+    const newText = prompt("Enter the updated question:");
+    if (newText === null || !newText.trim()) return;
+
+    const newMarks = prompt("Enter question marks:");
+    if (newMarks === null || !Number.isInteger(Number(newMarks)) || Number(newMarks) < 1) return;
+
+    try {
+        await apiRequest(
+            `${API.quizzes}questions/${questionId}/`,
+            {
+                method:"PATCH",
+                body:JSON.stringify({
+                    question_text:newText.trim(),
+                    marks:Number(newMarks)
+                })
+            }
+        );
+
+        await loadQuestions(quizId);
+        showMessage("quizMessage", "Question updated successfully.");
+
+    } catch (error) {
+        showMessage("quizMessage", error.message, "error");
+    }
+}
+
+async function deleteQuestion(questionId, quizId) {
+    if (!confirm("Delete this question and its choices?")) return;
+
+    try {
+        await apiRequest(
+            `${API.quizzes}questions/${questionId}/`,
+            {method:"DELETE"}
+        );
+
+        await loadQuestions(quizId);
+        showMessage("quizMessage", "Question deleted successfully.");
+
+    } catch (error) {
+        showMessage("quizMessage", error.message, "error");
+    }
+}
+
+
+// ==========================================
+// CHOICE MANAGEMENT
+// ==========================================
+
+async function loadChoices(questionId) {
+    const box = document.getElementById(`choices-${questionId}`);
+    if (!box) return;
+
+    try {
+        const choices = await apiRequest(
+            `${API.quizzes}questions/${questionId}/choices/`
+        );
+
+        if (!choices.length) {
+            box.innerHTML = '<p>No choices added yet.</p>';
+            return;
+        }
+
+        box.innerHTML = choices.map(choice => `
+            <div class="choice-row">
+                <span>
+                    ${escapeHTML(choice.choice_text)}
+                    ${choice.is_correct
+                        ? '<span class="badge success">Correct</span>'
+                        : ''}
+                </span>
+                <span>
+                    <button class="btn secondary small"
+                        onclick="editChoice(${choice.id},${questionId})">Edit</button>
+                    <button class="btn danger small"
+                        onclick="deleteChoice(${choice.id},${questionId})">Delete</button>
+                </span>
+            </div>
+        `).join("");
+
+    } catch (error) {
+        box.innerHTML = `<p>${escapeHTML(error.message)}</p>`;
+    }
+}
+
+async function addChoice(event, questionId) {
+    event.preventDefault();
+
+    const text = document.getElementById(`choice-text-${questionId}`).value.trim();
+    const correct = document.getElementById(`choice-correct-${questionId}`).checked;
+
+    try {
+        await apiRequest(
+            `${API.quizzes}questions/${questionId}/choices/`,
+            {
+                method:"POST",
+                body:JSON.stringify({
+                    choice_text:text,
+                    is_correct:correct
+                })
+            }
+        );
+
+        event.target.reset();
+        await loadChoices(questionId);
+        showMessage("quizMessage", "Choice added successfully.");
+
+    } catch (error) {
+        showMessage("quizMessage", error.message, "error");
+    }
+}
+
+async function editChoice(choiceId, questionId) {
+    const newText = prompt("Enter the updated choice text:");
+    if (newText === null || !newText.trim()) return;
+
+    const correct = confirm("Should this be the correct answer?");
+
+    try {
+        await apiRequest(
+            `${API.quizzes}choices/${choiceId}/`,
+            {
+                method:"PATCH",
+                body:JSON.stringify({
+                    choice_text:newText.trim(),
+                    is_correct:correct
+                })
+            }
+        );
+
+        await loadChoices(questionId);
+        showMessage("quizMessage", "Choice updated successfully.");
+
+    } catch (error) {
+        showMessage("quizMessage", error.message, "error");
+    }
+}
+
+async function deleteChoice(choiceId, questionId) {
+    if (!confirm("Delete this choice?")) return;
+
+    try {
+        await apiRequest(
+            `${API.quizzes}choices/${choiceId}/`,
+            {method:"DELETE"}
+        );
+
+        await loadChoices(questionId);
+        showMessage("quizMessage", "Choice deleted successfully.");
+
+    } catch (error) {
+        showMessage("quizMessage", error.message, "error");
+    }
+}
+
+
+// ==========================================
+// INITIAL LOAD
+// ==========================================
+
+async function initializeDashboard() {
+    await Promise.all([
+        loadUsers(),
+        loadMissions(),
+        loadQuizzes()
+    ]);
+}
+
+initializeDashboard();
+
+</script>
+
+</body>
+</html>

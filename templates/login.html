@@ -1,0 +1,541 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | LogicVerse</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #080e20;
+            color: #ffffff;
+        }
+
+        .login-page {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+        }
+
+        /* LEFT SIDE */
+
+        .welcome-section {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 45px 8%;
+            background:
+                radial-gradient(circle at 15% 20%, #263c83 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, #38216c 0%, transparent 38%),
+                linear-gradient(135deg, #111d40, #10102b);
+        }
+
+        .welcome-section::before,
+        .welcome-section::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(129, 140, 248, 0.13);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .welcome-section::before {
+            width: 400px;
+            height: 400px;
+            top: 12%;
+            right: -180px;
+        }
+
+        .welcome-section::after {
+            width: 300px;
+            height: 300px;
+            bottom: 5%;
+            left: -170px;
+        }
+
+        .brand {
+            position: relative;
+            z-index: 2;
+            font-size: 29px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand span {
+            color: #818cf8;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+            max-width: 570px;
+            margin: 50px 0;
+        }
+
+        .welcome-tag {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 30px;
+            background: rgba(129, 140, 248, 0.13);
+            border: 1px solid rgba(129, 140, 248, 0.3);
+            color: #a5b4fc;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-content h1 {
+            font-size: clamp(38px, 4.5vw, 58px);
+            line-height: 1.15;
+            margin-bottom: 22px;
+            letter-spacing: -1.5px;
+        }
+
+        .welcome-content h1 span {
+            background: linear-gradient(90deg, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .welcome-content p {
+            color: #b7c1dc;
+            font-size: 16px;
+            line-height: 1.9;
+            max-width: 460px;
+        }
+
+        /* ALGORITHM VISUAL */
+
+        .visualization {
+            position: relative;
+            z-index: 2;
+            max-width: 480px;
+            padding: 25px;
+            margin-top: 35px;
+            border: 1px solid rgba(165, 180, 252, 0.2);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.045);
+            backdrop-filter: blur(10px);
+        }
+
+        .visual-title {
+            color: #a5b4fc;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .graph {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .node {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: #202d59;
+            border: 2px solid #818cf8;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 18px rgba(129, 140, 248, 0.25);
+        }
+
+        .node.active {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            border-color: #c4b5fd;
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.6);
+        }
+
+        .graph-arrow {
+            color: #818cf8;
+            font-size: 23px;
+        }
+
+        .visual-caption {
+            color: #9ba9cc;
+            font-size: 12px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .left-footer {
+            position: relative;
+            z-index: 2;
+            color: #7f8cac;
+            font-size: 12px;
+        }
+
+        /* RIGHT SIDE */
+
+        .form-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 45px 9%;
+            background: #0b1225;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .mobile-brand {
+            display: none;
+        }
+
+        .form-heading {
+            margin-bottom: 35px;
+        }
+
+        .form-heading h2 {
+            font-size: 34px;
+            margin-bottom: 12px;
+            letter-spacing: -0.7px;
+        }
+
+        .form-heading p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        label {
+            display: block;
+            color: #dbe4f5;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 22px 0 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #293651;
+            border-radius: 11px;
+            outline: none;
+            background: #131e34;
+            color: white;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: #71809b;
+        }
+
+        input:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 30px;
+            padding: 16px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(100deg, #6366f1, #8b5cf6);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #message {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 18px;
+            min-height: 20px;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 30px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .register-link a {
+            color: #a5b4fc;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #94a3b8;
+            font-size: 13px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: #a5b4fc;
+        }
+
+        .form-footer {
+            margin-top: 55px;
+            text-align: center;
+            color: #53617a;
+            font-size: 11px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .login-page {
+                grid-template-columns: 1fr 0.9fr;
+            }
+
+            .welcome-section {
+                padding: 35px 7%;
+            }
+
+            .form-section {
+                padding: 35px 7%;
+            }
+
+            .welcome-content h1 {
+                font-size: 39px;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .login-page {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-section {
+                min-height: 330px;
+                padding: 28px 7%;
+            }
+
+            .welcome-content {
+                margin: 40px 0 20px;
+            }
+
+            .welcome-content h1 {
+                font-size: 35px;
+            }
+
+            .welcome-content p {
+                font-size: 14px;
+            }
+
+            .visualization {
+                display: none;
+            }
+
+            .left-footer {
+                display: none;
+            }
+
+            .form-section {
+                padding: 45px 8%;
+                align-items: flex-start;
+            }
+
+            .form-heading h2 {
+                font-size: 29px;
+            }
+
+            .form-footer {
+                margin-top: 35px;
+            }
+
+        }
+
+        @media (max-width: 380px) {
+
+            .welcome-content h1 {
+                font-size: 30px;
+            }
+
+            .form-heading h2 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="login-page">
+
+    <!-- LEFT WELCOME SECTION -->
+
+    <section class="welcome-section">
+
+        <div class="brand">
+            Logic<span>Verse.</span>
+        </div>
+
+        <div class="welcome-content">
+
+            <div class="welcome-tag">
+                YOUR ALGORITHM JOURNEY STARTS HERE
+            </div>
+
+            <h1>
+                Think Smart.<br>
+                Learn <span>Algorithms.</span><br>
+                Solve Problems.
+            </h1>
+
+            <p>
+                Explore the world of algorithms through interactive
+                stories, real-time visualizations and exciting
+                problem-solving missions.
+            </p>
+
+            <div class="visualization">
+
+                <div class="visual-title">
+                    EXPLORE ALGORITHM VISUALIZATION
+                </div>
+
+                <div class="graph">
+                    <div class="node active">A</div>
+                    <span class="graph-arrow">→</span>
+                    <div class="node">B</div>
+                    <span class="graph-arrow">→</span>
+                    <div class="node active">C</div>
+                    <span class="graph-arrow">→</span>
+                    <div class="node">D</div>
+                </div>
+
+                <div class="visual-caption">
+                    Learn. Explore. Analyze. Achieve.
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="left-footer">
+            © 2026 LogicVerse. All Rights Reserved.
+        </div>
+
+    </section>
+
+
+    <!-- RIGHT LOGIN SECTION -->
+
+    <section class="form-section">
+
+        <div class="login-container">
+
+            <div class="mobile-brand">
+                Logic<span>Verse.</span>
+            </div>
+
+            <div class="form-heading">
+
+                <h2>Welcome Back!</h2>
+
+                <p>
+                    Enter your credentials to access your
+                    LogicVerse account and continue learning.
+                </p>
+
+            </div>
+
+            <form id="loginForm">
+
+                <label for="username">Username</label>
+
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button type="submit" id="loginButton">
+                    Login to LogicVerse →
+                </button>
+
+            </form>
+
+            <p id="message" aria-live="polite"></p>
+
+            <div class="register-link">
+                New to LogicVerse?
+                <a href="/signup/">Create an account</a>
+            </div>
+
+            <a href="/" class="back-link">
+                ← Back to Home
+            </a>
+
+            <div class="form-footer">
+                Learn Algorithms Through Stories and Visualization.
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script src="{% static 'js/login.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Challenge | LogicVerse</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6fb;
+            min-height: 100vh;
+            color: #222;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            font-size: 25px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .quiz-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 45px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 10px;
+        }
+
+        .quiz-info h2 {
+            color: #172554;
+            font-size: 23px;
+        }
+
+        #questionCount {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .quiz-container > h1 {
+            font-size: 25px;
+            margin-bottom: 25px;
+            color: #172554;
+        }
+
+        #questionText {
+            font-size: 19px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            border: 1px solid #dbe2ea;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            background: #eef2ff;
+            border-color: #6366f1;
+        }
+
+        .option input {
+            cursor: pointer;
+            accent-color: #4f46e5;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #3730a3;
+        }
+
+        #message {
+            color: #dc2626;
+            margin-top: 15px;
+        }
+
+        /* Result Section */
+
+        .result {
+            text-align: center;
+        }
+
+        .result h2 {
+            color: #172554;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .score {
+            font-size: 38px;
+            color: #4f46e5;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .result-summary {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        .review-title {
+            text-align: left;
+            color: #172554;
+            margin: 30px 0 18px;
+            font-size: 22px;
+        }
+
+        .review-card {
+            text-align: left;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid #16a34a;
+            padding: 18px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .review-card.incorrect {
+            border-left-color: #dc2626;
+        }
+
+        .review-card h3 {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .answer-line {
+            margin: 8px 0;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .status.correct {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .correct-answer {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .selected-answer {
+            color: #334155;
+        }
+
+        .result button {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 22px;
+                margin: 25px auto;
+            }
+
+            .quiz-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .buttons button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>LogicVerse</h2>
+    <a href="/quiz-catalogue/">Back to Quizzes</a>
+</header>
+
+<div class="quiz-container">
+
+    <div class="quiz-info">
+        <h2 id="quizTitle">Loading Quiz...</h2>
+        <span id="questionCount"></span>
+    </div>
+
+    <h1>Quiz Challenge</h1>
+
+    <h3 id="questionText"></h3>
+
+    <div id="optionsContainer"></div>
+
+    <p id="message"></p>
+
+    <div class="buttons">
+        <button id="nextBtn" onclick="nextQuestion()">
+            Next Question
+        </button>
+
+        <button id="submitBtn"
+                onclick="submitQuiz()"
+                style="display: none;">
+            Submit Quiz
+        </button>
+    </div>
+
+    <div id="resultContainer"></div>
+
+</div>
+
+<script>
+    const token = localStorage.getItem("access_token");
+
+    const params = new URLSearchParams(window.location.search);
+    const quizId = params.get("id");
+
+    let quizData = null;
+    let currentQuestion = 0;
+    let answers = [];
+
+    document.addEventListener("DOMContentLoaded", loadQuiz);
+
+
+    // Load Quiz
+
+    async function loadQuiz() {
+
+        if (!token) {
+            window.location.href = "/login/";
+            return;
+        }
+
+        if (!quizId) {
+            document.getElementById("message").textContent =
+                "Quiz ID is missing.";
+            return;
+        }
+
+        try {
+
+            const response = await fetch(`/api/quizzes/${quizId}/`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.error || data.detail || "Unable to load quiz."
+                );
+            }
+
+            quizData = data;
+
+            answers = new Array(
+                quizData.questions.length
+            ).fill(null);
+
+            document.getElementById("quizTitle").textContent =
+                quizData.title;
+
+            showQuestion();
+
+        } catch (error) {
+
+            document.getElementById("message").textContent =
+                error.message;
+
+        }
+    }
+
+
+    // Show Current Question
+
+    function showQuestion() {
+
+        const question = quizData.questions[currentQuestion];
+
+        document.getElementById("questionCount").textContent =
+            `Question ${currentQuestion + 1} of ${quizData.questions.length}`;
+
+        document.getElementById("questionText").textContent =
+            question.question_text;
+
+        const container =
+            document.getElementById("optionsContainer");
+
+        container.innerHTML = "";
+
+        question.choices.forEach(choice => {
+
+            const label = document.createElement("label");
+            label.className = "option";
+
+            const radio = document.createElement("input");
+
+            radio.type = "radio";
+            radio.name = "answer";
+            radio.value = choice.id;
+
+            radio.checked =
+                Number(answers[currentQuestion]) === Number(choice.id);
+
+            radio.addEventListener("change", function () {
+
+                answers[currentQuestion] = choice.id;
+
+                document.getElementById("message").textContent = "";
+
+            });
+
+            label.append(
+                radio,
+                document.createTextNode(choice.choice_text)
+            );
+
+            container.appendChild(label);
+
+        });
+
+        document.getElementById("nextBtn").style.display =
+            currentQuestion === quizData.questions.length - 1
+                ? "none"
+                : "inline-block";
+
+        document.getElementById("submitBtn").style.display =
+            currentQuestion === quizData.questions.length - 1
+                ? "inline-block"
+                : "none";
+
+        document.getElementById("message").textContent = "";
+
+    }
+
+
+    // Go to Next Question
+
+    function nextQuestion() {
+
+        if (answers[currentQuestion] === null) {
+
+            document.getElementById("message").textContent =
+                "Please select an answer first.";
+
+            return;
+        }
+
+        if (currentQuestion < quizData.questions.length - 1) {
+
+            currentQuestion++;
+
+            showQuestion();
+
+        }
+
+    }
+
+
+    // Submit Quiz
+
+    async function submitQuiz() {
+
+        if (answers[currentQuestion] === null) {
+
+            document.getElementById("message").textContent =
+                "Please select an answer first.";
+
+            return;
+        }
+
+        const answerData = quizData.questions.map(
+            (question, index) => ({
+
+                question_id: question.id,
+                choice_id: answers[index]
+
+            })
+        );
+
+        try {
+
+            const response = await fetch(
+                `/api/quizzes/${quizId}/submit/`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        answers: answerData
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error || data.detail || "Quiz submission failed."
+                );
+
+            }
+
+            showResults(data);
+
+        } catch (error) {
+
+            document.getElementById("message").textContent =
+                error.message;
+
+        }
+
+    }
+
+
+    // Display Quiz Results
+
+    function showResults(data) {
+
+        document.querySelector(".quiz-info").style.display = "none";
+
+        document.querySelector(".quiz-container > h1").style.display = "none";
+
+        document.getElementById("questionText").style.display = "none";
+
+        document.getElementById("optionsContainer").style.display = "none";
+
+        document.getElementById("message").style.display = "none";
+
+        document.querySelector(".buttons").style.display = "none";
+
+        const resultContainer =
+            document.getElementById("resultContainer");
+
+        const correctCount = data.results.filter(
+            result => result.is_correct
+        ).length;
+
+        let resultHTML = `
+            <div class="result">
+
+                <h2>Quiz Completed!</h2>
+
+                <div class="score">
+                    ${data.score} / ${data.total_marks}
+                </div>
+
+                <p class="result-summary">
+                    You answered ${correctCount} out of
+                    ${data.results.length} questions correctly.
+                </p>
+
+            </div>
+
+            <h2 class="review-title">Answer Review</h2>
+        `;
+
+
+        // Show Every Question's Result
+
+        data.results.forEach((result, index) => {
+
+            const statusClass =
+                result.is_correct ? "correct" : "incorrect";
+
+            const statusText =
+                result.is_correct ? "Correct" : "Incorrect";
+
+            resultHTML += `
+
+                <div class="review-card ${statusClass}">
+
+                    <span class="status ${statusClass}">
+                        ${statusText}
+                    </span>
+
+                    <h3>
+                        Q${index + 1}. ${escapeHTML(result.question_text)}
+                    </h3>
+
+                    <p class="answer-line selected-answer">
+                        <strong>Your Answer:</strong>
+                        ${escapeHTML(result.selected_choice)}
+                    </p>
+
+                    <p class="answer-line correct-answer">
+                        <strong>Correct Answer:</strong>
+                        ${escapeHTML(result.correct_choice || "Not available")}
+                    </p>
+
+                </div>
+
+            `;
+
+        });
+
+
+        resultHTML += `
+
+            <div class="result">
+
+                <button onclick="window.location.href='/quiz-catalogue/'">
+                    Back to Quiz Catalogue
+                </button>
+
+            </div>
+
+        `;
+
+        resultContainer.innerHTML = resultHTML;
+
+    }
+
+
+    // Escape HTML to safely display answer text
+
+    function escapeHTML(value) {
+
+        const div = document.createElement("div");
+
+        div.textContent = value ?? "";
+
+        return div.innerHTML;
+
+    }
+
+</script>
+
+</body>
+</html>

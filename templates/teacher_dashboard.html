@@ -1,0 +1,832 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Dashboard | LogicVerse</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6fb;
+            color: #1e293b;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #172554;
+            color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 45px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .sidebar h3 {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 35px;
+            min-width: 0;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .topbar h1 {
+            font-size: 28px;
+        }
+
+        .topbar p {
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        .teacher-badge {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 10px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* Statistics */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .card .icon {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 15px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .card h2 {
+            font-size: 30px;
+            color: #1e40af;
+        }
+
+        /* Sections */
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+            scroll-margin-top: 20px;
+        }
+
+        .section h2 {
+            margin-bottom: 12px;
+            font-size: 21px;
+        }
+
+        .section > p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* Mission Form */
+        #missionForm {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        #missionForm label {
+            font-weight: bold;
+            color: #334155;
+        }
+
+        #missionForm input:not([type="checkbox"]),
+        #missionForm select,
+        #missionForm textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        #missionForm textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        #missionForm button {
+            background: #2563eb;
+            color: white;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #missionForm button:hover {
+            background: #1d4ed8;
+        }
+
+        #missionForm button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        /* Mission Cards */
+        .mission-card,
+        .learner-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .mission-card h3,
+        .learner-item h3 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .mission-card p,
+        .learner-item p {
+            color: #64748b;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+
+        .mission-status {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .empty-message {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 18px;
+            color: #64748b;
+        }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 190px;
+                padding: 25px 12px;
+            }
+
+            .main-content {
+                padding: 22px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .logo {
+                margin-bottom: 20px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            Logic<span>Verse</span>
+        </div>
+
+        <h3>Teacher Menu</h3>
+
+        <a href="#dashboard" class="active">🏠 Dashboard</a>
+        <a href="#missions">📚 Manage Missions</a>
+        <a href="#learners">👨‍🎓 Learners</a>
+        <a href="#progress">📊 Student Progress</a>
+
+        <h3 style="margin-top: 35px;">Account</h3>
+
+        <a href="/">🏡 Home</a>
+        <a href="#" id="logoutButton">🚪 Logout</a>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content" id="dashboard">
+
+        <div class="topbar">
+
+            <div>
+                <h1>Welcome, Teacher! 👋</h1>
+                <p>Manage your missions and monitor learner progress.</p>
+            </div>
+
+            <div class="teacher-badge">
+                Teacher Panel
+            </div>
+
+        </div>
+
+
+        <!-- Statistics -->
+        <div class="stats">
+
+            <div class="card">
+                <div class="icon">📚</div>
+                <h3>Total Missions</h3>
+                <h2 id="totalMissions">0</h2>
+            </div>
+
+            <div class="card">
+                <div class="icon">👨‍🎓</div>
+                <h3>Total Learners</h3>
+                <h2 id="totalLearners">0</h2>
+            </div>
+
+            <div class="card">
+                <div class="icon">🏆</div>
+                <h3>Completed Missions</h3>
+                <h2 id="completedMissions">0</h2>
+            </div>
+
+            <div class="card">
+                <div class="icon">⚡</div>
+                <h3>Active Missions</h3>
+                <h2 id="activeMissions">0</h2>
+            </div>
+
+            <div class="card">
+                <div class="icon">📝</div>
+                <h3>Total Quizzes</h3>
+                <h2 id="totalQuizzes">0</h2>
+            </div>
+
+            <div class="card">
+                <div class="icon">🎯</div>
+                <h3>Quiz Attempts</h3>
+                <h2 id="totalQuizAttempts">0</h2>
+            </div>
+
+        </div>
+
+
+        <!-- Mission Management -->
+        <section class="section" id="missions">
+
+            <h2>📚 Mission Management</h2>
+
+            <p>Create and manage learning missions for your students.</p>
+
+            <h3 style="margin-top: 25px;">Create New Mission</h3>
+
+            <form id="missionForm">
+
+                <label for="missionTitle">Mission Title</label>
+                <input type="text" id="missionTitle" required
+                    placeholder="Enter mission title">
+
+                <label for="algorithm">Algorithm</label>
+                <input type="text" id="algorithm" required
+                    placeholder="Example: Binary Search">
+
+                <label for="difficulty">Difficulty</label>
+                <select id="difficulty" required>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+
+                <label for="description">Description</label>
+                <textarea id="description" required
+                    placeholder="Enter mission description"></textarea>
+
+                <label for="story">Story</label>
+                <textarea id="story" required
+                    placeholder="Enter mission story"></textarea>
+
+                <label for="learningGoal">Learning Goal</label>
+                <textarea id="learningGoal" required
+                    placeholder="Enter learning goal"></textarea>
+
+                <label for="instructions">Instructions</label>
+                <textarea id="instructions" required
+                    placeholder="Enter mission instructions"></textarea>
+
+                <label>
+                    <input type="checkbox" id="isActive" checked>
+                    Active Mission
+                </label>
+
+                <button type="submit" id="createMissionButton">
+                    Create Mission
+                </button>
+
+                <p id="missionMessage" class="message"></p>
+
+            </form>
+
+            <h3 style="margin-top: 35px;">Existing Missions</h3>
+
+            <div id="missionList" class="empty-message">
+                Loading missions...
+            </div>
+
+        </section>
+
+
+        <!-- Learners -->
+        <section class="section" id="learners">
+
+            <h2>👨‍🎓 Learners</h2>
+
+            <p>View registered learners and their learning activities.</p>
+
+            <div id="learnerList" class="empty-message">
+                Loading learner information...
+            </div>
+
+        </section>
+
+
+        <!-- Student Progress -->
+        <section class="section" id="progress">
+
+            <h2>📊 Student Progress</h2>
+
+            <p>Monitor student performance and mission completion.</p>
+
+            <div id="progressList" class="empty-message">
+                Loading student progress...
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+        window.location.href = "/login/";
+        return;
+    }
+
+    const authHeaders = {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+    };
+
+    const missionAPI = "/api/missions/teacher/missions/";
+
+
+    // ==========================
+    // LOAD TEACHER DASHBOARD
+    // ==========================
+
+    async function loadDashboard() {
+
+        const response = await fetch(
+            "/accounts/teacher/dashboard/",
+            {
+                method: "GET",
+                headers: authHeaders
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Unable to load dashboard.");
+        }
+
+        const overview = data.overview;
+
+        document.getElementById("totalMissions").textContent =
+            overview.total_missions;
+
+        document.getElementById("totalLearners").textContent =
+            overview.total_learners;
+
+        document.getElementById("completedMissions").textContent =
+            overview.total_mission_completed;
+
+        document.getElementById("activeMissions").textContent =
+            overview.active_missions;
+
+        document.getElementById("totalQuizzes").textContent =
+            overview.total_quizzes;
+
+        document.getElementById("totalQuizAttempts").textContent =
+            overview.total_quiz_attempts;
+
+
+        // Learners
+        const learnerList = document.getElementById("learnerList");
+        const progressList = document.getElementById("progressList");
+
+        learnerList.innerHTML = "";
+        progressList.innerHTML = "";
+
+        if (data.learner_performance.length === 0) {
+
+            learnerList.textContent = "No learners registered yet.";
+            progressList.textContent = "No student progress available.";
+
+        } else {
+
+            data.learner_performance.forEach(function (learner) {
+
+                const learnerCard = document.createElement("div");
+                learnerCard.className = "learner-item";
+
+                const learnerName = document.createElement("h3");
+                learnerName.textContent = learner.username;
+
+                const learnerEmail = document.createElement("p");
+                learnerEmail.textContent = "Email: " + learner.email;
+
+                learnerCard.appendChild(learnerName);
+                learnerCard.appendChild(learnerEmail);
+
+                learnerList.appendChild(learnerCard);
+
+
+                const progressCard = document.createElement("div");
+                progressCard.className = "learner-item";
+
+                const progressName = document.createElement("h3");
+                progressName.textContent = learner.username;
+
+                const started = document.createElement("p");
+                started.textContent =
+                    "Started Missions: " +
+                    learner.mission_progress.total_started;
+
+                const completed = document.createElement("p");
+                completed.textContent =
+                    "Completed Missions: " +
+                    learner.mission_progress.total_completed;
+
+                const steps = document.createElement("p");
+                steps.textContent =
+                    "Completed Steps: " +
+                    learner.mission_progress.completed_steps;
+
+                const quizzes = document.createElement("p");
+                quizzes.textContent =
+                    "Quiz Attempts: " +
+                    learner.quiz_summary.total_attempts;
+
+                progressCard.appendChild(progressName);
+                progressCard.appendChild(started);
+                progressCard.appendChild(completed);
+                progressCard.appendChild(steps);
+                progressCard.appendChild(quizzes);
+
+                progressList.appendChild(progressCard);
+
+            });
+
+        }
+
+    }
+
+
+    // ==========================
+    // LOAD EXISTING MISSIONS
+    // ==========================
+
+    async function loadMissions() {
+
+        const missionList = document.getElementById("missionList");
+
+        const response = await fetch(missionAPI, {
+            method: "GET",
+            headers: authHeaders
+        });
+
+        const missions = await response.json();
+
+        if (!response.ok) {
+            throw new Error("Unable to load missions.");
+        }
+
+        missionList.innerHTML = "";
+
+        if (missions.length === 0) {
+            missionList.textContent = "No missions created yet.";
+            return;
+        }
+
+        missions.forEach(function (mission) {
+
+            const card = document.createElement("div");
+            card.className = "mission-card";
+
+            const title = document.createElement("h3");
+            title.textContent = mission.title;
+
+            const algorithm = document.createElement("p");
+            algorithm.textContent = "Algorithm: " + mission.algorithm;
+
+            const difficulty = document.createElement("p");
+            difficulty.textContent = "Difficulty: " + mission.difficulty;
+
+            const description = document.createElement("p");
+            description.textContent = mission.description;
+
+            const status = document.createElement("span");
+            status.className = mission.is_active
+                ? "mission-status"
+                : "mission-status inactive";
+
+            status.textContent = mission.is_active
+                ? "Active"
+                : "Inactive";
+
+            card.appendChild(title);
+            card.appendChild(algorithm);
+            card.appendChild(difficulty);
+            card.appendChild(description);
+            card.appendChild(status);
+
+            missionList.appendChild(card);
+
+        });
+
+    }
+
+
+    // ==========================
+    // CREATE NEW MISSION
+    // ==========================
+
+    document.getElementById("missionForm").addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+            const button = document.getElementById("createMissionButton");
+            const message = document.getElementById("missionMessage");
+
+            button.disabled = true;
+            button.textContent = "Creating Mission...";
+
+            message.textContent = "";
+
+            const missionData = {
+
+                title: document.getElementById("missionTitle").value.trim(),
+
+                algorithm: document.getElementById("algorithm").value.trim(),
+
+                difficulty: document.getElementById("difficulty").value,
+
+                description: document.getElementById("description").value.trim(),
+
+                story: document.getElementById("story").value.trim(),
+
+                learning_goal: document.getElementById("learningGoal").value.trim(),
+
+                instructions: document.getElementById("instructions").value.trim(),
+
+                is_active: document.getElementById("isActive").checked
+
+            };
+
+            try {
+
+                const response = await fetch(missionAPI, {
+                    method: "POST",
+                    headers: authHeaders,
+                    body: JSON.stringify(missionData)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    const errors = Object.entries(data)
+                        .map(([field, details]) => {
+                            const text = Array.isArray(details)
+                                ? details.join(", ")
+                                : typeof details === "string"
+                                    ? details
+                                    : JSON.stringify(details);
+
+                            return `${field}: ${text}`;
+                        })
+                        .join(" | ");
+
+                    throw new Error(errors || "Mission creation failed.");
+
+                }
+
+                message.style.color = "#16a34a";
+                message.textContent = "Mission created successfully!";
+
+                document.getElementById("missionForm").reset();
+
+                await loadMissions();
+                await loadDashboard();
+
+            } catch (error) {
+
+                message.style.color = "#dc2626";
+                message.textContent = error.message;
+
+            } finally {
+
+                button.disabled = false;
+                button.textContent = "Create Mission";
+
+            }
+
+        }
+    );
+
+
+    // ==========================
+    // INITIAL DATA LOAD
+    // ==========================
+
+    try {
+
+        await loadDashboard();
+        await loadMissions();
+
+    } catch (error) {
+
+        console.error("Dashboard Error:", error);
+        alert(error.message);
+
+    }
+
+
+    // ==========================
+    // LOGOUT
+    // ==========================
+
+    document.getElementById("logoutButton").addEventListener(
+        "click",
+        async function (event) {
+
+            event.preventDefault();
+
+            const refreshToken = localStorage.getItem("refresh_token");
+
+            try {
+
+                if (refreshToken) {
+
+                    await fetch("/accounts/logout/", {
+                        method: "POST",
+                        headers: authHeaders,
+                        body: JSON.stringify({
+                            refresh: refreshToken
+                        })
+                    });
+
+                }
+
+            } catch (error) {
+
+                console.error("Logout error:", error);
+
+            } finally {
+
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+
+                window.location.href = "/login/";
+
+            }
+
+        }
+    );
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+
+/* ===============================
+   VISUALIZATION HERO
+================================ */
+
+.visual-hero {
+    padding: 90px 8% 55px;
+    text-align: center;
+}
+
+.visual-hero .tag {
+    color: #a78bfa;
+    letter-spacing: 3px;
+    font-size: 13px;
+}
+
+.visual-hero h1 {
+    font-size: clamp(38px, 5vw, 65px);
+    margin: 25px 0;
+    color: #fff;
+}
+
+.visual-hero h1 span {
+    color: #8b5cf6;
+}
+
+.visual-hero p {
+    color: #aaa;
+    max-width: 650px;
+    margin: auto;
+    line-height: 1.8;
+}
+
+/* ===============================
+   ALGORITHM NAVIGATION
+================================ */
+
+.algorithm-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px;
+}
+
+.algorithm-nav a {
+    text-decoration: none;
+    color: #ddd;
+    padding: 12px 22px;
+    border: 1px solid #34344f;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.algorithm-nav a:hover {
+    background: #7c3aed;
+    border-color: #7c3aed;
+    color: white;
+}
+
+/* ===============================
+   VISUALIZATION SECTIONS
+================================ */
+
+.visual-section {
+    padding: 65px 8%;
+}
+
+.visual-heading {
+    margin-bottom: 30px;
+}
+
+.visual-heading .tag {
+    color: #a78bfa;
+    letter-spacing: 2px;
+    font-size: 12px;
+}
+
+.visual-heading h2 {
+    color: white;
+    font-size: 32px;
+    margin: 12px 0;
+}
+
+.visual-heading p {
+    color: #aaa;
+    line-height: 1.7;
+}
+
+/* ===============================
+   VISUALIZATION PANEL
+================================ */
+
+.visual-panel {
+    background: #151525;
+    border: 1px solid #30304b;
+    border-radius: 18px;
+    padding: 30px;
+    margin-top: 25px;
+}
+
+.visual-panel h3 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.visual-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.visual-controls button {
+    background: #7c3aed;
+    color: white;
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.visual-controls button:hover {
+    background: #6d28d9;
+}
+
+.visual-controls button.reset-btn {
+    background: #34344f;
+}
+
+.visual-controls input {
+    background: #202038;
+    border: 1px solid #444464;
+    color: white;
+    padding: 11px;
+    border-radius: 8px;
+    width: 120px;
+}
+
+/* ===============================
+   GRAPH AREA
+================================ */
+
+.graph-area {
+    background: #10101d;
+    border: 1px solid #292943;
+    border-radius: 14px;
+    padding: 25px;
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: auto;
+}
+
+.graph-area svg {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+}
+
+/* ===============================
+   ARRAY VISUALIZATION
+================================ */
+
+.array-area {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 30px 10px;
+}
+
+.array-item {
+    width: 55px;
+    height: 55px;
+    background: #292943;
+    border: 1px solid #555577;
+    border-radius: 8px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.array-item.active {
+    background: #7c3aed;
+    border-color: #a78bfa;
+}
+
+.array-item.visited {
+    background: #166534;
+    border-color: #22c55e;
+}
+
+.array-item.discarded {
+    opacity: 0.3;
+}
+
+/* ===============================
+   STATUS INFORMATION
+================================ */
+
+.visual-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 22px;
+}
+
+.info-box {
+    background: #202038;
+    border-radius: 10px;
+    padding: 18px;
+    color: #aaa;
+}
+
+.info-box strong {
+    display: block;
+    color: white;
+    font-size: 20px;
+    margin-top: 8px;
+}
+
+.step-message {
+    color: #c4b5fd;
+    margin-top: 20px;
+    line-height: 1.7;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 700px) {
+
+    .visual-section {
+        padding: 45px 5%;
+    }
+
+    .visual-panel {
+        padding: 18px;
+    }
+
+    .visual-info {
+        grid-template-columns: 1fr;
+    }
+
+    .visual-heading h2 {
+        font-size: 27px;
+    }
+
+}
